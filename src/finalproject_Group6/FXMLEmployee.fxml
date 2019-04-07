@@ -20,9 +20,9 @@
                 <Label text="Status: " GridPane.rowIndex="1" GridPane.columnIndex="3" fx:id="lblStatus" />
                 <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="lblStatusShow" />
                 
-                <Label text="Last Name" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
+                <Label text="Last Name*" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
                 <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtFirstName" />
-                <Label text="Frist Name" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
+                <Label text="Frist Name*" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
                 <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtLastName" />
                 
                 <Label text="BirthDate" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblBirthDate" />
@@ -35,28 +35,26 @@
                 <Label text="Email" GridPane.rowIndex="4" GridPane.columnIndex="3" fx:id="lblEmail" />
                 <TextField GridPane.rowIndex="4" GridPane.columnIndex="4" fx:id="txtEmail" />
                 
-                <Label text="Hire Date" GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="lblHireDate" />
-                <TextField GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="txtHireDate" />
-                <Label text="End Date" GridPane.rowIndex="5" GridPane.columnIndex="3" fx:id="lblEndDate" />
-                <Label text="" GridPane.rowIndex="5" GridPane.columnIndex="4" fx:id="lblEndDateFinal" />
+                <Label text="Address" GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="lblAddress" />
+                <TextField GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="txtAddres" />
+                <Label text="Hire Date" GridPane.rowIndex="5" GridPane.columnIndex="3" fx:id="lblHireDate" />
+                <TextField GridPane.rowIndex="5" GridPane.columnIndex="4" fx:id="txtHireDate" />
                 
                 <!--Start of employee pay info-->
-                <Label text="Pay Information" GridPane.rowIndex="6" GridPane.columnIndex="0" fx:id="lblPayInfo" />
+                <Label text="Pay Information" GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="lblPayInfo" />
                 
-                <Label text="Employee ID" GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="lblID" />
-                <TextField GridPane.rowIndex="7" GridPane.columnIndex="1" fx:id="txtID" />
-                <Label text="SIN" GridPane.rowIndex="7" GridPane.columnIndex="3" fx:id="lblSIN" />
-                <TextField GridPane.rowIndex="7" GridPane.columnIndex="4" fx:id="txtSIN" />
-                
-                <Label text="Vacation Percent" GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="lblVacattionPercent" />
-                <TextField GridPane.rowIndex="8" GridPane.columnIndex="1" fx:id="txtVacationPercent" />
-                <Label text="Catagory" GridPane.rowIndex="8" GridPane.columnIndex="3" fx:id="lblCatagory" />
-                <ComboBox GridPane.rowIndex="8" GridPane.columnIndex="4" fx:id="cmbCategory" promptText="Select" />
-                
+                <Label text="SIN*" GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="lblSIN" />
+                <TextField GridPane.rowIndex="8" GridPane.columnIndex="1" fx:id="txtSIN" />
+                <Label text="Employee ID*" GridPane.rowIndex="8" GridPane.columnIndex="3" fx:id="lblID" />
+                <TextField GridPane.rowIndex="8" GridPane.columnIndex="4" fx:id="txtID" />
+                                     
                 <Label text="Pay Method" GridPane.rowIndex="9" GridPane.columnIndex="0" fx:id="lblPayMethod" />
                 <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="1" fx:id="cmbPayMethod" promptText="Select" />
-                <Label text="Pay Amount" GridPane.rowIndex="9" GridPane.columnIndex="3" fx:id="lblPayAmount" />
-                <TextField GridPane.rowIndex="9" GridPane.columnIndex="4" fx:id="txtPayAmount" />
+                <Label text="Catagory" GridPane.rowIndex="9" GridPane.columnIndex="3" fx:id="lblCatagory" />
+                <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="4" fx:id="cmbCategory" promptText="Select" />
+                
+                <Label text="Pay Rate*" GridPane.rowIndex="10" GridPane.columnIndex="0" fx:id="lblPayRate" />
+                <TextField GridPane.rowIndex="10" GridPane.columnIndex="1" fx:id="txtPayRate" />
                 <!--End of collecting information-->
                 
                 <!--Start of Buttons/navigation-->

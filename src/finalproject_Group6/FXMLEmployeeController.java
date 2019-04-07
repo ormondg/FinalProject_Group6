@@ -33,7 +33,8 @@ import javafx.stage.Stage;
  */
 public class FXMLEmployeeController implements Initializable {
     @FXML
-    private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate, txtEndDate;
+    private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate,
+            txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN, txtID, txtPayRate;
     
     @FXML
     ComboBox cmbGender, cmbPayMethod, cmbCategory;
@@ -79,35 +80,52 @@ public class FXMLEmployeeController implements Initializable {
     
     private boolean createEmployee() throws FileNotFoundException, IOException{
         Employee e = new Employee();
-        String employeeType = (String) cmbCategory.getValue();
-        e.setLastName(txtLastName.getText()); 
-        switch (employeeType) {
-            case "Manager":
-                allManagers.add(allManagers.size(), e);  // add the manager refence to the end of the array
-                fo = new FileOutputStream("Manager.bat");
-                os = new ObjectOutputStream(fo);
-                os.writeObject(allManagers);
-                os.close();
-                break;
-            case "Crew Trainer":
-                allCrewTrainers.add(allCrewTrainers.size(), e);  // add the manager refence to the end of the array
-                fo = new FileOutputStream("Trainer.bat");
-                os = new ObjectOutputStream(fo);
-                os.writeObject(allCrewTrainers);
-                os.close();
-                break;
-            default:
-                allCrew.add(allCrew.size(), e);  // add the manager refence to the end of the array
-                fo = new FileOutputStream("Crew.bat");
-                os = new ObjectOutputStream(fo);
-                os.writeObject(allCrew);
-                os.close();
-                break;
+        // take all the info form the form
+        e.setLastName(txtLastName.getText());
+        e.setFirstName(txtFirstName.getText());  
+        e.setBirthDate(txtBirthDate.getText());
+        e.setGender((String) cmbGender.getValue()); 
+        e.setPhone(txtPhone.getText()); 
+        e.setEmail(txtEmail.getText()); 
+        e.setAddress(txtAddres.getText()); 
+        e.setHireDate(txtHireDate.getText()); 
+        e.setSIN(txtSIN.getText()); 
+        e.setEmployeeID(txtID.getText()); 
+        e.setType((String) cmbCategory.getValue()); 
+        e.setPayMethod((String) cmbPayMethod.getValue());   
+        e.setRateOfPay(txtPayRate.getText()); 
+        
+        if (e.validate()){
+            switch (e.getType()) {
+                case "Manager":
+                    allManagers.add(allManagers.size(), e);  // add the manager refence to the end of the array
+                    fo = new FileOutputStream("Manager.bat");
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allManagers);
+                    os.close();
+                    break;
+                case "Crew Trainer":
+                    allCrewTrainers.add(allCrewTrainers.size(), e);  // add the manager refence to the end of the array
+                    fo = new FileOutputStream("Trainer.bat");
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allCrewTrainers);
+                    os.close();
+                    break;
+                default:
+                    allCrew.add(allCrew.size(), e);  // add the manager refence to the end of the array
+                    fo = new FileOutputStream("Crew.bat");
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allCrew);
+                    os.close();
+                    break;
+            }
+                        /*
+                    used for writing objects to file
+                */
+            return true;
+        }else{
+            return false;
         }
-                    /*
-                used for writing objects to file
-            */
-        return true;
     }
 
     /**

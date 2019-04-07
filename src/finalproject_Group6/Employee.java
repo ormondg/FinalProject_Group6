@@ -13,13 +13,36 @@ import java.io.Serializable;
  */
 
 public class Employee implements Serializable{
-    private String firstName, lastName, hireDate, endDate, province, birthDate, email, employeeID, SIN, rateOfPay, gender;
+
+
+    private String firstName, lastName, hireDate, endDate, province, phone, address, birthDate, email, employeeID, SIN, rateOfPay, gender, type, payMethod;
     private boolean isSalary, isActive;
     
     Employee(){
         employeeID = "-1";
         firstName = "";
         lastName = "";
+    }
+
+    
+    
+    public boolean validate(){
+        int num1, num3;
+        double num2;
+        try{ // try to turn the id's into numbers
+            num1 = Integer.parseInt(getEmployeeID());
+            num2 = Double.parseDouble(getRateOfPay());
+            num3 = Integer.parseInt(getSIN());
+        }catch(NumberFormatException e){ // id is not a number
+            return false;
+        }
+        
+        if (type == null){
+            type = "Crew";
+        }
+        
+        // if ids are a number
+        return num1 >= 0 && num2 >= 0 && (!lastName.equals("") && !firstName.equals("")); // String !empty
     }
 
     /**
@@ -93,6 +116,34 @@ public class Employee implements Serializable{
     }
 
     /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
      * @return the birthDate
      */
     public String getBirthDate() {
@@ -118,48 +169,6 @@ public class Employee implements Serializable{
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return the isSalary
-     */
-    public boolean isIsSalary() {
-        return isSalary;
-    }
-
-    /**
-     * @param isSalary the isSalary to set
-     */
-    public void setIsSalary(boolean isSalary) {
-        this.isSalary = isSalary;
-    }
-
-    /**
-     * @return the isActive
-     */
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    /**
-     * @param isActive the isActive to set
-     */
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    /**
-     * @return the gender
-     */
-    public String getGender() {
-        return gender;
-    }
-
-    /**
-     * @param gender the gender to set
-     */
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     /**
@@ -203,19 +212,76 @@ public class Employee implements Serializable{
     public void setRateOfPay(String rateOfPay) {
         this.rateOfPay = rateOfPay;
     }
-    
-    public boolean validate(){
-        int num1, num3;
-        double num2;
-        try{ // try to turn the id's into numbers
-            num1 = Integer.parseInt(employeeID);
-            num2 = Double.parseDouble(rateOfPay);
-            num3 = Integer.parseInt(SIN);
-        }catch(NumberFormatException e){ // id is not a number
-            return false;
-        }
-        // if ids are a number
-        return num1 >= 0 && num2 >= 0 && (!lastName.equals("") && !firstName.equals("")); // String !empty
+
+    /**
+     * @return the gender
+     */
+    public String getGender() {
+        return gender;
     }
+
+    /**
+     * @param gender the gender to set
+     */
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the payMethod
+     */
+    public String getPayMethod() {
+        return payMethod;
+    }
+
+    /**
+     * @param payMethod the payMethod to set
+     */
+    public void setPayMethod(String payMethod) {
+        this.payMethod = payMethod;
+    }
+
+    /**
+     * @return the isSalary
+     */
+    public boolean isIsSalary() {
+        return isSalary;
+    }
+
+    /**
+     * @param isSalary the isSalary to set
+     */
+    public void setIsSalary(boolean isSalary) {
+        this.isSalary = isSalary;
+    }
+
+    /**
+     * @return the isActive
+     */
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     
 }
