@@ -32,7 +32,7 @@
                 
                 
                 <Button GridPane.rowIndex="10" GridPane.columnIndex="0" text="Find" onAction="#showRecordPage" fx:id="btnFind" />
-                <Button GridPane.rowIndex="10" GridPane.columnIndex="2" text="Create" onAction="#showEmployeePage" fx:id="btnCreate" />
+                <Button GridPane.rowIndex="10" GridPane.columnIndex="2" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
                 
                 
                 

@@ -42,7 +42,7 @@ public class FXMLIndexController implements Initializable {
         swtich scenes to the add patient page
     */
     @FXML
-    private void showEmployeePage(ActionEvent event) throws IOException {
+    private void createEmployeeButton(ActionEvent event) throws IOException {
         Parent set = FXMLLoader.load(getClass().getResource("FXMLEmployee.fxml")); // get FXML
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage

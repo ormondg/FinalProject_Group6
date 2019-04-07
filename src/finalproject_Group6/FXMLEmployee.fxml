@@ -60,7 +60,7 @@
                 <!--End of collecting information-->
                 
                 <!--Start of Buttons/navigation-->
-                <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployee" fx:id="btnFind" />
+                <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnFind" />
                 <Button GridPane.rowIndex="11" GridPane.columnIndex="2" text="Cancel" onAction="#cancelToIndex" fx:id="btnCreate" />
                 
                 

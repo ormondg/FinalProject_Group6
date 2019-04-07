@@ -5,25 +5,16 @@
  */
 package finalproject_Group6;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Graham
  */
 
-public class Employee {
-    private String firstName;
-    private String lastName;
-    private String hireDate;
-    private String endDate;
-    private String province;
-    private String birthDate;
-    private String email;
-    private boolean isSalary;
-    private boolean isActive;
-    private char gender;
-    private String employeeID;
-    private String SIN;
-    private String rateOfPay;
+public class Employee implements Serializable{
+    private String firstName, lastName, hireDate, endDate, province, birthDate, email, employeeID, SIN, rateOfPay, gender;
+    private boolean isSalary, isActive;
     
     Employee(){
         employeeID = "-1";
@@ -160,14 +151,14 @@ public class Employee {
     /**
      * @return the gender
      */
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
     /**
      * @param gender the gender to set
      */
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
