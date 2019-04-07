@@ -28,33 +28,14 @@ import javafx.stage.Stage;
 public class FXMLIndexController implements Initializable {
     
     @FXML
-    private TextField txtId;
+    private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate, txtEndDate;
+
     @FXML
-    private TextField txtFirstName;
+    private ComboBox cmbCategory, cmbPayMethod, cmbStatus;
+
     @FXML
-    private TextField txtLastName;
-    
-    @FXML
-    private ComboBox cmbCategory;
-    @FXML
-    private ComboBox cmbPayMethod;
-    @FXML
-    private ComboBox cmbStatus;
-    
-    @FXML
-    private TextField txtJobTitle;
-    @FXML
-    private TextField txtHireDate;
-    @FXML
-    private TextField txtEndDate;
-    
-    
-    
-    @FXML
-    private Button btnFind;
-    
-    @FXML
-    private Button btnCreate;
+    private Button btnFind, btnCreate;
+
     
     
     /*
@@ -83,7 +64,7 @@ public class FXMLIndexController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cmbCategory.getItems().addAll("Full Time","Part Time");
+        cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
         cmbPayMethod.getItems().addAll("Hourly", "Salary");
         cmbStatus.getItems().addAll("Active", "Inactive");
     }    
