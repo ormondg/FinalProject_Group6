@@ -16,17 +16,21 @@ public class Employee implements Serializable{
 
 
     private String firstName, lastName, hireDate, endDate, province, phone, address, birthDate, email, employeeID, SIN, rateOfPay, gender, type, payMethod;
+    public String errors;
     private boolean isSalary, isActive;
     
     Employee(){
         employeeID = "-1";
         firstName = "";
         lastName = "";
+        errors = "";
+        isActive = true;
     }
 
     
     
     public boolean validate(){
+        errors = "";
         int num1, num3;
         double num2;
         try{ // try to turn the id's into numbers
@@ -34,6 +38,17 @@ public class Employee implements Serializable{
             num2 = Double.parseDouble(getRateOfPay());
             num3 = Integer.parseInt(getSIN());
         }catch(NumberFormatException e){ // id is not a number
+            errors = "please enter the * feilds correctly";
+            return false;
+        }
+        
+        if (lastName.equals("") && firstName.equals("")){
+            errors = "please enter the * feilds correctly";
+            return false;
+        }
+        
+        if (num1 < 0 && num1 < 0 && num3 < 0){
+            errors = "please enter the * feilds correctly";
             return false;
         }
         
@@ -41,8 +56,8 @@ public class Employee implements Serializable{
             type = "Crew";
         }
         
-        // if ids are a number
-        return num1 >= 0 && num2 >= 0 && (!lastName.equals("") && !firstName.equals("")); // String !empty
+        return true;
+            
     }
 
     /**

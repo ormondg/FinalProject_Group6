@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -34,7 +35,11 @@ import javafx.stage.Stage;
 public class FXMLEmployeeController implements Initializable {
     @FXML
     private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate,
-            txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN, txtID, txtPayRate;
+            txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN, txtID,
+            txtPayRate;
+    
+    @FXML
+    private Label lblError;
     
     @FXML
     ComboBox cmbGender, cmbPayMethod, cmbCategory;
@@ -96,6 +101,7 @@ public class FXMLEmployeeController implements Initializable {
         e.setRateOfPay(txtPayRate.getText()); 
         
         if (e.validate()){
+            lblError.setText("");
             switch (e.getType()) {
                 case "Manager":
                     allManagers.add(allManagers.size(), e);  // add the manager refence to the end of the array
@@ -124,6 +130,7 @@ public class FXMLEmployeeController implements Initializable {
                 */
             return true;
         }else{
+            lblError.setText(e.errors);
             return false;
         }
     }
@@ -157,9 +164,7 @@ public class FXMLEmployeeController implements Initializable {
                 oi = new ObjectInputStream(fi); // get object from file
                 allCrew = (ArrayList)oi.readObject(); // add it to the array list
             } catch (FileNotFoundException ex) { // no file or info
-                System.out.println("Have to create new file");
             } catch (IOException | ClassNotFoundException ex) { // no file or info
-                System.out.println("Have to create new file");
             } 
         }  
     }    

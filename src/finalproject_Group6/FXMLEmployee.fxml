@@ -8,62 +8,64 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLEmployeeController">
     <children>
-        <GridPane>
+        <VBox>
             <children>
-                <!--
-                    Employee Records page
-                -->
-                <Label text="Create New Employee" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTitle" />
-                
-                <!--Start of Standard Info-->
-                <Label text="Standard Information" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblStandardInfo" />
-                <Label text="Status: " GridPane.rowIndex="1" GridPane.columnIndex="3" fx:id="lblStatus" />
-                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="lblStatusShow" />
-                
-                <Label text="Last Name*" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
-                <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtFirstName" />
-                <Label text="Frist Name*" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
-                <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtLastName" />
-                
-                <Label text="BirthDate" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblBirthDate" />
-                <TextField GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="txtBirthDate" />
-                <Label text="Gender" GridPane.rowIndex="3" GridPane.columnIndex="3" fx:id="lblGender" />
-                <ComboBox GridPane.rowIndex="3" GridPane.columnIndex="4" fx:id="cmbGender" promptText="Select" />
-                
-                <Label text="Phone Number" GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="lblPhone" />
-                <TextField GridPane.rowIndex="4" GridPane.columnIndex="1" fx:id="txtPhone" />
-                <Label text="Email" GridPane.rowIndex="4" GridPane.columnIndex="3" fx:id="lblEmail" />
-                <TextField GridPane.rowIndex="4" GridPane.columnIndex="4" fx:id="txtEmail" />
-                
-                <Label text="Address" GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="lblAddress" />
-                <TextField GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="txtAddres" />
-                <Label text="Hire Date" GridPane.rowIndex="5" GridPane.columnIndex="3" fx:id="lblHireDate" />
-                <TextField GridPane.rowIndex="5" GridPane.columnIndex="4" fx:id="txtHireDate" />
-                
-                <!--Start of employee pay info-->
-                <Label text="Pay Information" GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="lblPayInfo" />
-                
-                <Label text="SIN*" GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="lblSIN" />
-                <TextField GridPane.rowIndex="8" GridPane.columnIndex="1" fx:id="txtSIN" />
-                <Label text="Employee ID*" GridPane.rowIndex="8" GridPane.columnIndex="3" fx:id="lblID" />
-                <TextField GridPane.rowIndex="8" GridPane.columnIndex="4" fx:id="txtID" />
-                                     
-                <Label text="Pay Method" GridPane.rowIndex="9" GridPane.columnIndex="0" fx:id="lblPayMethod" />
-                <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="1" fx:id="cmbPayMethod" promptText="Select" />
-                <Label text="Catagory" GridPane.rowIndex="9" GridPane.columnIndex="3" fx:id="lblCatagory" />
-                <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="4" fx:id="cmbCategory" promptText="Select" />
-                
-                <Label text="Pay Rate*" GridPane.rowIndex="10" GridPane.columnIndex="0" fx:id="lblPayRate" />
-                <TextField GridPane.rowIndex="10" GridPane.columnIndex="1" fx:id="txtPayRate" />
-                <!--End of collecting information-->
-                
-                <!--Start of Buttons/navigation-->
-                <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnFind" />
-                <Button GridPane.rowIndex="11" GridPane.columnIndex="2" text="Cancel" onAction="#cancelToIndex" fx:id="btnCreate" />
-                
-                
+            <GridPane>
+                <children>
+                    <!--
+                        Employee Records page
+                    -->
+                    <Label text="Create New Employee" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTitle" />
+
+                    <!--Start of Standard Info-->
+                    <Label text="Standard Information" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblStandardInfo" />
+                    <Label text="Status: " GridPane.rowIndex="1" GridPane.columnIndex="3" fx:id="lblStatus" />
+                    <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="lblStatusShow" />
+
+                    <Label text="Last Name *" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
+                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtFirstName" />
+                    <Label text="Frist Name *" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
+                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtLastName" />
+
+                    <Label text="BirthDate" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblBirthDate" />
+                    <TextField GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="txtBirthDate" />
+                    <Label text="Gender" GridPane.rowIndex="3" GridPane.columnIndex="3" fx:id="lblGender" />
+                    <ComboBox GridPane.rowIndex="3" GridPane.columnIndex="4" fx:id="cmbGender" promptText="Select" />
+
+                    <Label text="Phone Number" GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="lblPhone" />
+                    <TextField GridPane.rowIndex="4" GridPane.columnIndex="1" fx:id="txtPhone" />
+                    <Label text="Email" GridPane.rowIndex="4" GridPane.columnIndex="3" fx:id="lblEmail" />
+                    <TextField GridPane.rowIndex="4" GridPane.columnIndex="4" fx:id="txtEmail" />
+
+                    <Label text="Address" GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="lblAddress" />
+                    <TextField GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="txtAddres" />
+                    <Label text="Hire Date" GridPane.rowIndex="5" GridPane.columnIndex="3" fx:id="lblHireDate" />
+                    <TextField GridPane.rowIndex="5" GridPane.columnIndex="4" fx:id="txtHireDate" />
+
+                    <!--Start of employee pay info-->
+                    <Label text="Pay Information" GridPane.rowIndex="7" GridPane.columnIndex="0" fx:id="lblPayInfo" />
+
+                    <Label text="SIN *" GridPane.rowIndex="8" GridPane.columnIndex="0" fx:id="lblSIN" />
+                    <TextField GridPane.rowIndex="8" GridPane.columnIndex="1" fx:id="txtSIN" />
+                    <Label text="Employee ID *" GridPane.rowIndex="8" GridPane.columnIndex="3" fx:id="lblID" />
+                    <TextField GridPane.rowIndex="8" GridPane.columnIndex="4" fx:id="txtID" />
+
+                    <Label text="Pay Method" GridPane.rowIndex="9" GridPane.columnIndex="0" fx:id="lblPayMethod" />
+                    <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="1" fx:id="cmbPayMethod" promptText="Select" />
+                    <Label text="Catagory" GridPane.rowIndex="9" GridPane.columnIndex="3" fx:id="lblCatagory" />
+                    <ComboBox GridPane.rowIndex="9" GridPane.columnIndex="4" fx:id="cmbCategory" promptText="Select" />
+
+                    <Label text="Pay Rate *" GridPane.rowIndex="10" GridPane.columnIndex="0" fx:id="lblPayRate" />
+                    <TextField GridPane.rowIndex="10" GridPane.columnIndex="1" fx:id="txtPayRate" />
+                    <!--End of collecting information-->
+
+                    <!--Start of Buttons/navigation-->
+                    <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnFind" />
+                    <Button GridPane.rowIndex="11" GridPane.columnIndex="2" text="Cancel" onAction="#cancelToIndex" fx:id="btnCreate" />
+                </children>
+            </GridPane>
+                <Label text="" fx:id="lblError" />
             </children>
-        </GridPane>
-        
+        </VBox>
     </children>
 </AnchorPane>
