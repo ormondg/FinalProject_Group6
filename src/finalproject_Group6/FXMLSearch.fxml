@@ -6,6 +6,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLSearchController">
-    <Button GridPane.rowIndex="10" GridPane.columnIndex="2" text="Back" onAction="#backToIndex" fx:id="btnCreate" />
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLSearchController">
+    <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+        <Label text="Employees" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="lblEmployees" />
+        <Button GridPane.rowIndex="0" GridPane.columnIndex="1" text="Back" onAction="#backToIndex" fx:id="btnBack" />
+        
+        <VBox GridPane.rowIndex="1" GridPane.columnIndex="0">
+            <Label text="Filters:" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilters" />
+            <HBox fx:id="HBoxFilters" spacing="10">
+                <children>
+<!--                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter1" />
+                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter2" />
+                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter3" />
+                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter4" />
+                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter5" />
+                <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilter6" />-->
+                </children>
+            </HBox>
+        </VBox>
+        
+        <Button GridPane.rowIndex="2" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
+        
+        <Label text="Name" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblName" />
+        <Label text="ID Number" GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="lblIDNumber" />
+        <Label text="Phone Number" GridPane.rowIndex="3" GridPane.columnIndex="2" fx:id="lblPhone" />
+        <Label text="Status" GridPane.rowIndex="3" GridPane.columnIndex="3" fx:id="lblStatus" />
+        
+        <VBox GridPane.rowIndex="4" GridPane.columnIndex="0">
+            
+        </VBox>
+    </GridPane>
 </AnchorPane>

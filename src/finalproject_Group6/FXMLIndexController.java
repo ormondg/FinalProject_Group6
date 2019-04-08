@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -28,13 +29,15 @@ import javafx.stage.Stage;
 public class FXMLIndexController implements Initializable {
     
     @FXML
-    private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate, txtEndDate;
+    private TextField txtId, txtFirstName, txtLastName;
 
     @FXML
     private ComboBox cmbCategory, cmbPayMethod, cmbStatus;
-
+    
     @FXML
-    private Button btnFind, btnCreate;
+    private Label lblError;
+    
+    public String [] appliedFilters = new String[6];
 
     
     
@@ -52,11 +55,28 @@ public class FXMLIndexController implements Initializable {
     
     @FXML
     private void showRecordPage(ActionEvent event) throws IOException {
-        Parent set = FXMLLoader.load(getClass().getResource("FXMLSearch.fxml")); // get FXML
-        Scene setScene = new Scene(set); // create the scene
-        Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
-        setStage.setScene(setScene);  // set scene
-        setStage.show(); // set the stage
+        getFilterInput();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
+        Parent set = (Parent) loader.load(); // load the fxml
+        FXMLSearchController controllerTwo = loader.getController(); // get the second controller
+        if(controllerTwo.getFilters(appliedFilters)){// give a method the filters to save them
+            Scene setScene = new Scene(set); // create the scene
+            Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
+            setStage.setScene(setScene);  // set scene
+            setStage.show(); // set the stage
+        }else{
+            lblError.setText("ID must be a number");
+        } 
+    }
+    
+    public void getFilterInput(){
+        //setup filter array
+        appliedFilters[0] = txtFirstName.getText();
+        appliedFilters[1] = txtLastName.getText();
+        appliedFilters[2] = txtId.getText();
+        appliedFilters[3] = (String) cmbCategory.getValue();
+        appliedFilters[4] = (String) cmbPayMethod.getValue();
+        appliedFilters[5] = (String) cmbStatus.getValue();
     }
 
     /**
