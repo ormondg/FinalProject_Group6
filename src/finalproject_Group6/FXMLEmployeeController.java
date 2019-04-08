@@ -120,12 +120,12 @@ public class FXMLEmployeeController implements Initializable {
                     os.writeObject(allCrewTrainers);
                     os.close();
                     break;
-                default: // write to the general crew file
+                case "Crew": // write to the general crew file
                     allCrew.add(allCrew.size(), e);  // add the crew refence to the end of the array
-                    fo = new FileOutputStream("Crew.bat");
+                    fo = new FileOutputStream("Crew.bat"); // get file 
                     os = new ObjectOutputStream(fo);
-                    os.writeObject(allCrew);
-                    os.close();
+                    os.writeObject(allCrew); // write object
+                    os.close(); // close file
                     break;
             }
                 /*
@@ -154,23 +154,38 @@ public class FXMLEmployeeController implements Initializable {
         allManagers = new ArrayList(); //setup array list
         allCrewTrainers = new ArrayList(); //setup array list
         allCrew = new ArrayList(); //setup array list
-        if(allManagers.isEmpty() || allCrewTrainers.isEmpty() || allCrew.isEmpty()){ // if the array list is empty
-            try { // get information from the file to file the array
-                fi = new FileInputStream("Manager.bat") ; // get file
-                oi = new ObjectInputStream(fi); // get object from file
-                allManagers = (ArrayList)oi.readObject(); // add it to the array list
-                
-                fi = new FileInputStream("Trainer.bat") ; // get file
-                oi = new ObjectInputStream(fi); // get object from file
-                allCrewTrainers = (ArrayList)oi.readObject(); // add it to the array list
-                
-                fi = new FileInputStream("Crew.bat") ; // get file
-                oi = new ObjectInputStream(fi); // get object from file
-                allCrew = (ArrayList)oi.readObject(); // add it to the array list
-            } catch (FileNotFoundException ex) { // no file or info
-            } catch (IOException | ClassNotFoundException ex) { // no file or info
-            } 
-        }  
+        /*
+            First File
+        */
+        try { // get information from the file to file the array
+            fi = new FileInputStream("Manager.bat") ; // get file
+            oi = new ObjectInputStream(fi); // get object from file
+            allManagers = (ArrayList)oi.readObject(); // add it to the array list
+        } catch (FileNotFoundException ex) { // no file or info
+        } catch (IOException | ClassNotFoundException ex) { // no file or info
+        }
+
+        /*
+            Second File
+        */
+        try { // get information from the file to file the array
+            fi = new FileInputStream("Trainer.bat") ; // get file
+            oi = new ObjectInputStream(fi); // get object from file
+            allCrewTrainers = (ArrayList)oi.readObject(); // add it to the array list
+        } catch (FileNotFoundException ex) { // no file or info
+        } catch (IOException | ClassNotFoundException ex) { // no file or info
+        }
+
+        /*
+            Third file
+        */
+        try { // get information from the file to file the array
+            fi = new FileInputStream("Crew.bat") ; // get file
+            oi = new ObjectInputStream(fi); // get object from file
+            allCrew = (ArrayList)oi.readObject(); // add it to the array list
+        } catch (FileNotFoundException ex) { // no file or info
+        } catch (IOException | ClassNotFoundException ex) { // no file or info
+        }
     }    
     
 }

@@ -5,8 +5,15 @@
  */
 package finalproject_Group6;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -27,12 +35,19 @@ import javafx.stage.Stage;
 public class FXMLSearchController implements Initializable {
     
     @FXML
-    private Label lblFilter0, lblFilter1, lblFilter2, lblFilter3, lblFilter4, lblFilter5;
-    
-    @FXML
     private HBox HBoxFilters;
     
+    @FXML
+    private VBox VBoxRecordsName, VBoxRecordsID, VBoxRecordsPhone, VBoxRecordsStatus;
+    
     public String [] appliedFilters;
+    
+    private static ArrayList<Employee> allRecords; // list for all Crew
+    File file; // create a file reference
+    FileOutputStream fo; // create file output reference
+    FileInputStream fi; // create file input reference
+    ObjectInputStream oi; // create object input reference
+    ObjectOutputStream os;  // create object output reference
     
     /*
         Back to the index button
@@ -73,11 +88,11 @@ public class FXMLSearchController implements Initializable {
     
     private void showFilters(){
         
-        for (String appliedFilter : appliedFilters) {  
-            if(appliedFilter != null){
-                if(!appliedFilter.equals("")){
-                    Label label = new Label(appliedFilter);
-                    HBoxFilters.getChildren().add(label);
+        for (String appliedFilter : appliedFilters) { // loop through the filters
+            if(appliedFilter != null){ // filter is set
+                if(!appliedFilter.equals("")){ // filter is set
+                    Label label = new Label(appliedFilter); // create a label of the filter
+                    HBoxFilters.getChildren().add(label); // add the label to the fxml
                 }
             }
         }
@@ -85,14 +100,70 @@ public class FXMLSearchController implements Initializable {
     
     private void showRecords(){
         
+        for (Employee record : allRecords){
+                Label name = new Label(record.getFirstName() + " " + record.getLastName()); // create a label of the name
+                Label id = new Label(record.getEmployeeID());
+                Label phone = new Label(record.getPhone());
+                Label status = new Label(record.getIsActive());
+                VBoxRecordsName.getChildren().add(name);
+                VBoxRecordsID.getChildren().add(id);
+                VBoxRecordsPhone.getChildren().add(phone);
+                VBoxRecordsStatus.getChildren().add(status);
+            }
     }
     
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+                
+                
+        
+            allRecords = new ArrayList(); //setup array list
+            
+            /*
+                First File
+            */
+            try { // get information from the file to file the array
+                fi = new FileInputStream("Manager.bat") ; // get file
+                oi = new ObjectInputStream(fi); // get object from file
+                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+            } catch (FileNotFoundException ex) { // no file or info
+            } catch (IOException | ClassNotFoundException ex) { // no file or info
+            }
+            
+            /*
+                Second File
+            */
+            try { // get information from the file to file the array
+                fi = new FileInputStream("Trainer.bat") ; // get file
+                oi = new ObjectInputStream(fi); // get object from file
+                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+            } catch (FileNotFoundException ex) { // no file or info
+            } catch (IOException | ClassNotFoundException ex) { // no file or info
+            }
+            
+            /*
+                Third file
+            */
+            try { // get information from the file to file the array
+                fi = new FileInputStream("Crew.bat") ; // get file
+                oi = new ObjectInputStream(fi); // get object from file
+                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+            } catch (FileNotFoundException ex) { // no file or info
+            } catch (IOException | ClassNotFoundException ex) { // no file or info
+            }
+            
+            for (Employee record: allRecords){
+                System.out.println(record.getFirstName());
+            }
+            showRecords();
+        
     }    
     
 }

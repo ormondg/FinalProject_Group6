@@ -290,8 +290,12 @@ public class Employee implements Serializable{
     /**
      * @return the isActive
      */
-    public boolean isIsActive() {
-        return isActive;
+    public String getIsActive() {
+        if (isActive){
+            return "Active";
+        }else{
+            return "In Active";
+        }
     }
 
     /**

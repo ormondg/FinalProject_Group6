@@ -23,9 +23,9 @@
                     <Label text="" GridPane.rowIndex="1" GridPane.columnIndex="4" fx:id="lblStatusShow" />
 
                     <Label text="Last Name *" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
-                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtFirstName" />
+                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtLastName" />
                     <Label text="Frist Name *" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
-                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtLastName" />
+                    <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtFirstName" />
 
                     <Label text="BirthDate" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblBirthDate" />
                     <TextField GridPane.rowIndex="3" GridPane.columnIndex="1" fx:id="txtBirthDate" />
