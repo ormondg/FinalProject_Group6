@@ -64,6 +64,7 @@ public class FXMLIndexController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // setup combo boxes
         cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
         cmbPayMethod.getItems().addAll("Hourly", "Salary");
         cmbStatus.getItems().addAll("Active", "Inactive");

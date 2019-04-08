@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class Employee implements Serializable{
 
 
+    //    information held in Strings to advoid user input errors
     private String firstName, lastName, hireDate, endDate, province, phone, address, birthDate, email, employeeID, SIN, rateOfPay, gender, type, payMethod;
     public String errors;
     private boolean isSalary, isActive;
@@ -24,39 +25,41 @@ public class Employee implements Serializable{
         firstName = "";
         lastName = "";
         errors = "";
-        isActive = true;
+        isActive = true; // default the crew to active when create
     }
 
     
-    
+    /*
+        Validate the entered information
+    */
     public boolean validate(){
-        errors = "";
-        int num1, num3;
-        double num2;
-        try{ // try to turn the id's into numbers
-            num1 = Integer.parseInt(getEmployeeID());
-            num2 = Double.parseDouble(getRateOfPay());
-            num3 = Integer.parseInt(getSIN());
-        }catch(NumberFormatException e){ // id is not a number
-            errors = "please enter the * feilds correctly";
-            return false;
+        errors = ""; // reset the error
+        int num1, num3; // create number reference
+        double num2; // create number reference
+        try{ // try to turn the number String into real Numbers
+            num1 = Integer.parseInt(getEmployeeID()); // inputed id
+            num2 = Double.parseDouble(getRateOfPay()); // inputed rate of pay
+            num3 = Integer.parseInt(getSIN()); // inputed SIN
+        }catch(NumberFormatException e){ // one is not a number
+            errors = "please enter the * feilds correctly"; // set error
+            return false; // validation failed
         }
         
-        if (lastName.equals("") && firstName.equals("")){
-            errors = "please enter the * feilds correctly";
-            return false;
+        if (lastName.equals("") && firstName.equals("")){ // employee name not set
+            errors = "please enter the * feilds correctly"; // set error
+            return false; // validation failed
         }
         
-        if (num1 < 0 && num1 < 0 && num3 < 0){
-            errors = "please enter the * feilds correctly";
-            return false;
+        if (num1 < 0 && num1 < 0 && num3 < 0){ // numbers entered are below zero
+            errors = "please enter the * feilds correctly"; // set error
+            return false; // validation failed 
         }
         
-        if (type == null){
-            type = "Crew";
+        if (type == null){ // did not select an employee type
+            type = "Crew"; // default the type to general crew =
         }
         
-        return true;
+        return true; // validation secussful 
             
     }
 

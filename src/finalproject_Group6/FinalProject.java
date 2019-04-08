@@ -19,7 +19,7 @@ public class FinalProject extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // load index page to start
         
         Scene scene = new Scene(root);
         

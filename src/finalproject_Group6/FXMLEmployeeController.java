@@ -33,6 +33,7 @@ import javafx.stage.Stage;
  * @author Graham
  */
 public class FXMLEmployeeController implements Initializable {
+    
     @FXML
     private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate,
             txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN, txtID,
@@ -44,29 +45,30 @@ public class FXMLEmployeeController implements Initializable {
     @FXML
     ComboBox cmbGender, cmbPayMethod, cmbCategory;
     
-    private static ArrayList<Employee> allManagers;
-    private static ArrayList<Employee> allCrewTrainers;
-    private static ArrayList<Employee> allCrew;
-    File file;
-    FileOutputStream fo;
-    FileInputStream fi;
-    ObjectInputStream oi;
-    ObjectOutputStream os; 
-    /*
+    private static ArrayList<Employee> allManagers; // list for managers
+    private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
+    private static ArrayList<Employee> allCrew; // list for all Crew
+    File file; // create a file reference
+    FileOutputStream fo; // create file output reference
+    FileInputStream fi; // create file input reference
+    ObjectInputStream oi; // create object input reference
+    ObjectOutputStream os;  // create object output reference
     
+    /*
         Create an Employee
     
     */
     @FXML
     private void createEmployeeButton(ActionEvent event) throws IOException {
         
-        if(createEmployee()){
+        // try to create an employee
+        if(createEmployee()){ // sucessful == move on to next page
             Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
             Scene setScene = new Scene(set); // create the scene
             Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
             setStage.setScene(setScene);  // set scene
             setStage.show(); // set the stage
-        }else{
+        }else{ // stay on page (record not created)
             
         }
     }
@@ -76,6 +78,7 @@ public class FXMLEmployeeController implements Initializable {
     */
     @FXML
     private void cancelToIndex(ActionEvent event) throws IOException {
+        // go back to the index page
         Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
@@ -84,8 +87,8 @@ public class FXMLEmployeeController implements Initializable {
     }
     
     private boolean createEmployee() throws FileNotFoundException, IOException{
-        Employee e = new Employee();
-        // take all the info form the form
+        Employee e = new Employee();// create an employee reference
+        // take all the info form the form into the employee reference
         e.setLastName(txtLastName.getText());
         e.setFirstName(txtFirstName.getText());  
         e.setBirthDate(txtBirthDate.getText());
@@ -100,38 +103,38 @@ public class FXMLEmployeeController implements Initializable {
         e.setPayMethod((String) cmbPayMethod.getValue());   
         e.setRateOfPay(txtPayRate.getText()); 
         
-        if (e.validate()){
+        if (e.validate()){ // vaidate the employee
             lblError.setText("");
             switch (e.getType()) {
-                case "Manager":
-                    allManagers.add(allManagers.size(), e);  // add the manager refence to the end of the array
-                    fo = new FileOutputStream("Manager.bat");
+                case "Manager": // write to the manager file
+                    allManagers.add(allManagers.size(), e);  // add the crew refence to the end of the array
+                    fo = new FileOutputStream("Manager.bat"); // get file 
                     os = new ObjectOutputStream(fo);
-                    os.writeObject(allManagers);
-                    os.close();
+                    os.writeObject(allManagers); // write object
+                    os.close(); // close file
                     break;
-                case "Crew Trainer":
-                    allCrewTrainers.add(allCrewTrainers.size(), e);  // add the manager refence to the end of the array
+                case "Crew Trainer": // write to the crew trainer file
+                    allCrewTrainers.add(allCrewTrainers.size(), e);  // add the crew refence to the end of the array
                     fo = new FileOutputStream("Trainer.bat");
                     os = new ObjectOutputStream(fo);
                     os.writeObject(allCrewTrainers);
                     os.close();
                     break;
-                default:
-                    allCrew.add(allCrew.size(), e);  // add the manager refence to the end of the array
+                default: // write to the general crew file
+                    allCrew.add(allCrew.size(), e);  // add the crew refence to the end of the array
                     fo = new FileOutputStream("Crew.bat");
                     os = new ObjectOutputStream(fo);
                     os.writeObject(allCrew);
                     os.close();
                     break;
             }
-                        /*
+                /*
                     used for writing objects to file
                 */
-            return true;
-        }else{
-            lblError.setText(e.errors);
-            return false;
+            return true; // employee created sucessfuly
+        }else{ // false validation
+            lblError.setText(e.errors); // show the error
+            return false; // return the an employee cannot be create
         }
     }
 
@@ -140,7 +143,8 @@ public class FXMLEmployeeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cmbGender.getItems().addAll("Male","Female");
+        // setup combo boxes
+        cmbGender.getItems().addAll("Male","Female"); 
         cmbPayMethod.getItems().addAll("Hourly", "Salary");
         cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
         
