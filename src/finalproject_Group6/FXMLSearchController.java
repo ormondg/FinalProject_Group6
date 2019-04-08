@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -38,7 +39,7 @@ public class FXMLSearchController implements Initializable {
     private HBox HBoxFilters;
     
     @FXML
-    private VBox VBoxRecordsName, VBoxRecordsID, VBoxRecordsPhone, VBoxRecordsStatus;
+    private VBox VBoxRecordsName, VBoxRecordsID, VBoxRecordsPhone, VBoxRecordsStatus, VBoxRecordsChange;
     
     public String [] appliedFilters;
     
@@ -96,19 +97,93 @@ public class FXMLSearchController implements Initializable {
                 }
             }
         }
+        
+        showRecords();// show all the records
     }
     
+    /*
+        Sort through the records removing everything that doesnt match
+    */
+    private void sortRecords(){
+        if (!appliedFilters[0].equals("")){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getLastName().toLowerCase().contains(appliedFilters[0].toLowerCase())){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+        
+        if (!appliedFilters[1].equals("")){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getFirstName().toLowerCase().contains(appliedFilters[1].toLowerCase())){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+        
+        if (!appliedFilters[2].equals("")){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getEmployeeID().contains(appliedFilters[2])){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+        
+        if (appliedFilters[3] != null){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getType().equals(appliedFilters[3])){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+        
+        if (appliedFilters[4] != null){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getPayMethod().equals(appliedFilters[4])){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+        
+        if (appliedFilters[5] != null){
+            for (int i = 0; i < allRecords.size(); i ++ ){
+                if (!allRecords.get(i).getIsActive().equals(appliedFilters[5])){
+                    allRecords.remove(i);
+                    i--;
+                }
+            }
+        }
+
+        
+        
+    }
+    
+    /*
+        Display the records to the FXML document
+    */
     private void showRecords(){
         
-        for (Employee record : allRecords){
+        sortRecords();
+        
+        for (Employee record : allRecords){ // loop through all the records
                 Label name = new Label(record.getFirstName() + " " + record.getLastName()); // create a label of the name
-                Label id = new Label(record.getEmployeeID());
-                Label phone = new Label(record.getPhone());
-                Label status = new Label(record.getIsActive());
+                Label id = new Label(record.getEmployeeID()); // create a label of the ID
+                Label phone = new Label(record.getPhone()); // create a label of the phone number
+                Label status = new Label(record.getIsActive()); // create a labal of the active status
+                Button button = new Button();
+                button.setText("Edit");
+                // add all the labels to the right vbox within the fxml hbox
                 VBoxRecordsName.getChildren().add(name);
                 VBoxRecordsID.getChildren().add(id);
                 VBoxRecordsPhone.getChildren().add(phone);
                 VBoxRecordsStatus.getChildren().add(status);
+                VBoxRecordsChange.getChildren().add(button);
+                
             }
     }
     
@@ -158,11 +233,6 @@ public class FXMLSearchController implements Initializable {
             } catch (FileNotFoundException ex) { // no file or info
             } catch (IOException | ClassNotFoundException ex) { // no file or info
             }
-            
-            for (Employee record: allRecords){
-                System.out.println(record.getFirstName());
-            }
-            showRecords();
         
     }    
     

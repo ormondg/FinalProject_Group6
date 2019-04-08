@@ -22,20 +22,24 @@
         <Button GridPane.rowIndex="2" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
         
         <HBox GridPane.rowIndex="3" GridPane.columnIndex="0" spacing="10">
-            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsName">
+            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsName" spacing="15">
                 <Label text="Name" fx:id="lblName" />
         
             </VBox>
-            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsID">
+            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsID" spacing="15">
                 <Label text="ID Number" fx:id="lblIDNumber" />
         
             </VBox>
-            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsPhone">
+            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsPhone" spacing="15">
                 <Label text="Phone Number" fx:id="lblPhone" />
         
             </VBox>
-            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsStatus">
+            <VBox GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="VBoxRecordsStatus" spacing="15">
                 <Label text="Status" fx:id="lblStatus" />
+            </VBox>
+            
+            <VBox GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="VBoxRecordsChange" spacing="10">
+                <Label text="" fx:id="lblChange" />
             </VBox>
         </HBox>
         

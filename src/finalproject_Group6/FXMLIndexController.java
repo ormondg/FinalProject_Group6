@@ -71,8 +71,8 @@ public class FXMLIndexController implements Initializable {
     
     public void getFilterInput(){
         //setup filter array
-        appliedFilters[0] = txtFirstName.getText();
-        appliedFilters[1] = txtLastName.getText();
+        appliedFilters[0] = txtLastName.getText();
+        appliedFilters[1] = txtFirstName.getText();
         appliedFilters[2] = txtId.getText();
         appliedFilters[3] = (String) cmbCategory.getValue();
         appliedFilters[4] = (String) cmbPayMethod.getValue();

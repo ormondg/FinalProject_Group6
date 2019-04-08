@@ -59,6 +59,10 @@ public class Employee implements Serializable{
             type = "Crew"; // default the type to general crew =
         }
         
+        if (payMethod == null){ // did not select an employee type
+            payMethod = "Hourly"; // default the type to general crew =
+        }
+        
         return true; // validation secussful 
             
     }
