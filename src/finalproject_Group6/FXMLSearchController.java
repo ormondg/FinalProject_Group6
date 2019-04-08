@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,7 +40,7 @@ public class FXMLSearchController implements Initializable {
     private HBox HBoxFilters;
     
     @FXML
-    private VBox VBoxRecordsName, VBoxRecordsID, VBoxRecordsPhone, VBoxRecordsStatus, VBoxRecordsChange;
+    private VBox VBoxRecords;
     
     public String [] appliedFilters;
     
@@ -105,56 +106,56 @@ public class FXMLSearchController implements Initializable {
         Sort through the records removing everything that doesnt match
     */
     private void sortRecords(){
-        if (!appliedFilters[0].equals("")){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getLastName().toLowerCase().contains(appliedFilters[0].toLowerCase())){
-                    allRecords.remove(i);
-                    i--;
+        if (!appliedFilters[0].equals("")){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through records
+                if (!allRecords.get(i).getLastName().toLowerCase().contains(appliedFilters[0].toLowerCase())){ // record does not match
+                    allRecords.remove(i); // remove record
+                    i--; // go back to not miss a record
                 }
             }
         }
         
-        if (!appliedFilters[1].equals("")){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getFirstName().toLowerCase().contains(appliedFilters[1].toLowerCase())){
-                    allRecords.remove(i);
-                    i--;
+        if (!appliedFilters[1].equals("")){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through records
+                if (!allRecords.get(i).getFirstName().toLowerCase().contains(appliedFilters[1].toLowerCase())){ // record does not match
+                    allRecords.remove(i); // remove record
+                    i--; // go back to not miss a record
                 }
             }
         }
         
-        if (!appliedFilters[2].equals("")){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getEmployeeID().contains(appliedFilters[2])){
-                    allRecords.remove(i);
-                    i--;
+        if (!appliedFilters[2].equals("")){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through records
+                if (!allRecords.get(i).getEmployeeID().contains(appliedFilters[2])){ // record does not match
+                    allRecords.remove(i); // remove the record
+                    i--; // go back to not miss a record
                 }
             }
         }
         
-        if (appliedFilters[3] != null){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getType().equals(appliedFilters[3])){
-                    allRecords.remove(i);
-                    i--;
+        if (appliedFilters[3] != null){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through records
+                if (!allRecords.get(i).getType().equals(appliedFilters[3])){ // records does not match
+                    allRecords.remove(i); // remove the record
+                    i--; //  go back to not miss a record
                 }
             }
         }
         
-        if (appliedFilters[4] != null){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getPayMethod().equals(appliedFilters[4])){
-                    allRecords.remove(i);
-                    i--;
+        if (appliedFilters[4] != null){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through records
+                if (!allRecords.get(i).getPayMethod().equals(appliedFilters[4])){ // records does not match
+                    allRecords.remove(i); /// remove the record
+                    i--; // go back to not miss a record
                 }
             }
         }
         
-        if (appliedFilters[5] != null){
-            for (int i = 0; i < allRecords.size(); i ++ ){
-                if (!allRecords.get(i).getIsActive().equals(appliedFilters[5])){
-                    allRecords.remove(i);
-                    i--;
+        if (appliedFilters[5] != null){ // filter set
+            for (int i = 0; i < allRecords.size(); i ++ ){ // loop through the records
+                if (!allRecords.get(i).getIsActive().equals(appliedFilters[5])){ // records does not match
+                    allRecords.remove(i); // remove the record
+                    i--; // go back to not miss a record
                 }
             }
         }
@@ -168,21 +169,40 @@ public class FXMLSearchController implements Initializable {
     */
     private void showRecords(){
         
-        sortRecords();
+        sortRecords(); // sort the records first
         
         for (Employee record : allRecords){ // loop through all the records
+                
                 Label name = new Label(record.getFirstName() + " " + record.getLastName()); // create a label of the name
                 Label id = new Label(record.getEmployeeID()); // create a label of the ID
                 Label phone = new Label(record.getPhone()); // create a label of the phone number
                 Label status = new Label(record.getIsActive()); // create a labal of the active status
-                Button button = new Button();
-                button.setText("Edit");
-                // add all the labels to the right vbox within the fxml hbox
-                VBoxRecordsName.getChildren().add(name);
-                VBoxRecordsID.getChildren().add(id);
-                VBoxRecordsPhone.getChildren().add(phone);
-                VBoxRecordsStatus.getChildren().add(status);
-                VBoxRecordsChange.getChildren().add(button);
+                
+                // set the labels min/max width
+                name.setMinWidth(140);
+                id.setMinWidth(140);
+                phone.setMinWidth(140);
+                status.setMinWidth(140);
+                name.setMaxWidth(140);
+                id.setMaxWidth(140);
+                phone.setMaxWidth(140);
+                status.setMaxWidth(140);
+                
+                //create a eddit button
+                Button button = new Button(); // create
+                button.setText("Edit"); // set text to edit
+                
+                // create a Hbox and add all the labels
+                HBox box = new HBox(); // create
+                box.setSpacing(20); // set spacing
+                box.getChildren().add(name);
+                box.getChildren().add(id);
+                box.getChildren().add(phone);
+                box.getChildren().add(status);
+                box.getChildren().add(button);
+                
+                //add the hbox to the records vbox in the fxml document
+                VBoxRecords.getChildren().add(box);
                 
             }
     }

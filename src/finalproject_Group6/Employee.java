@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class Employee implements Serializable{
 
 
-    //    information held in Strings to advoid user input errors
+    // information held in Strings to advoid user input errors
     private String firstName, lastName, hireDate, endDate, province, phone, address, birthDate, email, employeeID, SIN, rateOfPay, gender, type, payMethod;
     public String errors;
     private boolean isSalary, isActive;
@@ -61,6 +61,10 @@ public class Employee implements Serializable{
         
         if (payMethod == null){ // did not select an employee type
             payMethod = "Hourly"; // default the type to general crew =
+        }
+        
+        if (phone.equals("")){ // phone number not set
+            phone = "N/A"; // default set its text
         }
         
         return true; // validation secussful 
