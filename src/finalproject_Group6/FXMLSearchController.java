@@ -15,7 +15,10 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -45,6 +48,11 @@ public class FXMLSearchController implements Initializable {
     public String [] appliedFilters;
     
     private static ArrayList<Employee> allRecords; // list for all Crew
+    private static ArrayList<Employee> allManagers; // list for managers
+    private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
+    private static ArrayList<Employee> allCrew; // list for all Crew
+    private static Employee editRecord; // list for all Crew
+    private static int currentEditRecord = 0;
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
     FileInputStream fi; // create file input reference
@@ -171,12 +179,12 @@ public class FXMLSearchController implements Initializable {
         
         sortRecords(); // sort the records first
         
-        for (Employee record : allRecords){ // loop through all the records
+        for (int i = 0; i < allRecords.size(); i ++){ // loop through all the records
                 
-                Label name = new Label(record.getFirstName() + " " + record.getLastName()); // create a label of the name
-                Label id = new Label(record.getEmployeeID()); // create a label of the ID
-                Label phone = new Label(record.getPhone()); // create a label of the phone number
-                Label status = new Label(record.getIsActive()); // create a labal of the active status
+                Label name = new Label(allRecords.get(i).getFirstName() + " " + allRecords.get(i).getLastName()); // create a label of the name
+                Label id = new Label(allRecords.get(i).getEmployeeID()); // create a label of the ID
+                Label phone = new Label(allRecords.get(i).getPhone()); // create a label of the phone number
+                Label status = new Label(allRecords.get(i).getIsActive()); // create a labal of the active status
                 
                 // set the labels min/max width
                 name.setMinWidth(140);
@@ -191,6 +199,15 @@ public class FXMLSearchController implements Initializable {
                 //create a eddit button
                 Button button = new Button(); // create
                 button.setText("Edit"); // set text to edit
+                button.setId(Integer.toString(i));
+                button.setOnAction((ActionEvent event) -> {
+                    Button b = (Button) event.getSource();
+                    editRecord = allRecords.get(Integer.parseInt(b.getId()));
+                    try {
+                        searchForEditRecord();
+                    } catch (IOException ex) {
+                    }
+                });
                 
                 // create a Hbox and add all the labels
                 HBox box = new HBox(); // create
@@ -207,6 +224,39 @@ public class FXMLSearchController implements Initializable {
             }
     }
     
+    private void searchForEditRecord() throws IOException{
+        switch (editRecord.getType()) {
+            case "Crew":
+                for (int i = 0; i < allCrew.size(); i ++){
+                    if (editRecord == allCrew.get(i)){
+                        System.out.println(i);
+                    }
+                }   
+                break;
+            case "Crew Trainer":
+                for (int i = 0; i < allCrewTrainers.size(); i ++){
+                    if (editRecord == allCrewTrainers.get(i)){
+                        System.out.println(i);
+                    }
+                }   
+                break;
+            case "Manager":
+                for (int i = 0; i < allManagers.size(); i ++){
+                    if (editRecord == allManagers.get(i)){
+                        currentEditRecord = i;
+                        System.out.println(i);
+                    }
+                }   
+                break;
+        }
+        Parent set = FXMLLoader.load(getClass().getResource("FXMLEmployee.fxml")); // get FXML
+        Scene setScene = new Scene(set); // create the scene
+        Stage stage = new Stage(); // create the stage
+        stage.setScene(setScene);  // set scene
+        stage.show(); // set the stage
+        
+    }
+    
 
     /**
      * Initializes the controller class.
@@ -220,6 +270,10 @@ public class FXMLSearchController implements Initializable {
                 
         
             allRecords = new ArrayList(); //setup array list
+            allManagers = new ArrayList(); //setup array list
+            allCrewTrainers = new ArrayList(); //setup array list
+            allCrew = new ArrayList(); //setup array list
+            
             
             /*
                 First File
@@ -227,7 +281,7 @@ public class FXMLSearchController implements Initializable {
             try { // get information from the file to file the array
                 fi = new FileInputStream("Manager.bat") ; // get file
                 oi = new ObjectInputStream(fi); // get object from file
-                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+                allManagers.addAll((ArrayList)oi.readObject()); // add it to the array list
             } catch (FileNotFoundException ex) { // no file or info
             } catch (IOException | ClassNotFoundException ex) { // no file or info
             }
@@ -238,7 +292,7 @@ public class FXMLSearchController implements Initializable {
             try { // get information from the file to file the array
                 fi = new FileInputStream("Trainer.bat") ; // get file
                 oi = new ObjectInputStream(fi); // get object from file
-                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+                allCrewTrainers.addAll((ArrayList)oi.readObject()); // add it to the array list
             } catch (FileNotFoundException ex) { // no file or info
             } catch (IOException | ClassNotFoundException ex) { // no file or info
             }
@@ -249,10 +303,13 @@ public class FXMLSearchController implements Initializable {
             try { // get information from the file to file the array
                 fi = new FileInputStream("Crew.bat") ; // get file
                 oi = new ObjectInputStream(fi); // get object from file
-                allRecords.addAll((ArrayList)oi.readObject()); // add it to the array list
+                allCrew.addAll((ArrayList)oi.readObject()); // add it to the array list
             } catch (FileNotFoundException ex) { // no file or info
             } catch (IOException | ClassNotFoundException ex) { // no file or info
             }
+            allRecords.addAll(allManagers);
+            allRecords.addAll(allCrewTrainers);
+            allRecords.addAll(allCrew);
         
     }    
     
