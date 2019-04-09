@@ -108,7 +108,6 @@ public class FXMLSearchController implements Initializable {
                 }
             }
         }
-        
         showRecords();// show all the records
     }
     
@@ -170,12 +169,13 @@ public class FXMLSearchController implements Initializable {
             }
         }
 
+        // compare the employees by id
         Comparator<Employee> compareById = (Employee e1, Employee e2) -> {
             Integer id1 = Integer.parseInt(e1.getEmployeeID());
             Integer id2 = Integer.parseInt(e2.getEmployeeID());
             return id1.compareTo(id2);
         };
-        Collections.sort(allRecords, compareById);
+        Collections.sort(allRecords, compareById); // sort the employees by id
     }
     
     /*
@@ -205,10 +205,11 @@ public class FXMLSearchController implements Initializable {
                 //create a eddit button
                 Button button = new Button(); // create
                 button.setText("Edit"); // set text to edit
-                button.setId(Integer.toString(i));
+                button.setId(Integer.toString(i)); // give the button the id of the array index
+                // create on action method
                 button.setOnAction((ActionEvent event) -> {
-                    Button b = (Button) event.getSource();
-                    editRecord = allRecords.get(Integer.parseInt(b.getId()));
+                    Button b = (Button) event.getSource();  // get the button event
+                    editRecord = allRecords.get(Integer.parseInt(b.getId())); // get the buttons id
                     try {
                         searchForEditRecord(event);
                     } catch (IOException ex) {
@@ -230,30 +231,35 @@ public class FXMLSearchController implements Initializable {
             }
     }
     
+    /*
+        search for a record to edit
+    */
     private void searchForEditRecord(ActionEvent event) throws IOException{
+        // search for the file type
         switch (editRecord.getType()) {
-            case "Crew":
-                for (int i = 0; i < allCrew.size(); i ++){
-                    if (editRecord == allCrew.get(i)){
-                        currentEditRecord = i;
+            case "Crew": // crew file
+                for (int i = 0; i < allCrew.size(); i ++){ //  loop through the file
+                    if (editRecord == allCrew.get(i)){ // get the record
+                        currentEditRecord = i; // create a index reference
                     }
                 }   
                 break;
-            case "Crew Trainer":
-                for (int i = 0; i < allCrewTrainers.size(); i ++){
-                    if (editRecord == allCrewTrainers.get(i)){
-                        currentEditRecord = i;
+            case "Crew Trainer": // crew trainer file
+                for (int i = 0; i < allCrewTrainers.size(); i ++){ // loop through file
+                    if (editRecord == allCrewTrainers.get(i)){ // get the record
+                        currentEditRecord = i; // create a index
                     }
                 }   
                 break;
-            case "Manager":
-                for (int i = 0; i < allManagers.size(); i ++){
-                    if (editRecord == allManagers.get(i)){
-                        currentEditRecord = i;
+            case "Manager": // manager file
+                for (int i = 0; i < allManagers.size(); i ++){ // loop through file
+                    if (editRecord == allManagers.get(i)){ // get the record
+                        currentEditRecord = i; // create a index
                     }
                 }   
                 break;
         }
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEmployee.fxml")); // get FXML
         Parent set = (Parent) loader.load(); // load the fxml
         FXMLEmployeeController controller = loader.getController(); // get the second controller
@@ -315,6 +321,8 @@ public class FXMLSearchController implements Initializable {
             } catch (FileNotFoundException ex) { // no file or info
             } catch (IOException | ClassNotFoundException ex) { // no file or info
             }
+            
+            // create an array list with all the records
             allRecords.addAll(allManagers);
             allRecords.addAll(allCrewTrainers);
             allRecords.addAll(allCrew);

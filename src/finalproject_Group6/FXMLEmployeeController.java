@@ -52,6 +52,7 @@ public class FXMLEmployeeController implements Initializable {
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
+    private static Employee currentEmployee;
     private static int currentRecord;
     private static String fileReference;
     
@@ -148,11 +149,40 @@ public class FXMLEmployeeController implements Initializable {
                     os.close(); // close file
                     break;
         }
+        
+        if (!currentEmployee.getEmployeeID().equals("-1")){
+            switch (currentEmployee.getType()) {
+                case "Manager": // write to the manager file
+                    fo = new FileOutputStream("Manager.bat"); // get file 
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allManagers); // write object
+                    os.close(); // close file
+                    break;
+                case "Crew Trainer": // write to the crew trainer file
+                    fo = new FileOutputStream("Trainer.bat");
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allCrewTrainers);
+                    os.close();
+                    break;
+                case "Crew": // write to the general crew file
+                    fo = new FileOutputStream("Crew.bat"); // get file 
+                    os = new ObjectOutputStream(fo);
+                    os.writeObject(allCrew); // write object
+                    os.close(); // close file
+                    break;
+            }
+        }
     }
     
+    /*
+        setup editing an employee record
+    */
     public void editEmployeeInformation(Employee e, int recordRef){
-        currentRecord = recordRef;
-        txtLastName.setText(e.getLastName());
+        currentEmployee = e; // get the record instance
+        currentRecord = recordRef; // get the record reference
+        
+        // set the textfeilds
+        txtLastName.setText(e.getLastName()); 
         txtFirstName.setText(e.getFirstName());
         txtBirthDate.setText(e.getBirthDate());
         cmbGender.setValue(e.getGender());
@@ -165,13 +195,15 @@ public class FXMLEmployeeController implements Initializable {
         cmbCategory.setValue(e.getType());
         cmbPayMethod.setValue(e.getPayMethod());
         txtPayRate.setText(e.getRateOfPay());
-        btnCreate.setText("Update");
-        fileReference = e.getType();
+        btnCreate.setText("Update"); // change the button name
     }
     
-    
+    /*
+        deletes an employee record
+    */
     public void deleteEmployeeRecord(){
-        switch (fileReference) {
+        System.out.println(currentEmployee.getType());
+        switch (currentEmployee.getType()) {
                 case "Manager": // write to the manager file
                     allManagers.remove(currentRecord);
                     break;
@@ -195,6 +227,7 @@ public class FXMLEmployeeController implements Initializable {
         cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
         
         currentRecord = -1;
+        currentEmployee = new Employee();
         fileReference = "";
         
         
