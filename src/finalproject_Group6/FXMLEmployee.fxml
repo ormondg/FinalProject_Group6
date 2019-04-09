@@ -24,7 +24,7 @@
 
                     <Label text="Last Name *" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="lblLastName" />
                     <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtLastName" />
-                    <Label text="Frist Name *" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblId" />
+                    <Label text="Frist Name *" GridPane.rowIndex="2" GridPane.columnIndex="3" fx:id="lblFirstName" />
                     <TextField GridPane.rowIndex="2" GridPane.columnIndex="4" fx:id="txtFirstName" />
 
                     <Label text="BirthDate" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="lblBirthDate" />
@@ -60,8 +60,8 @@
                     <!--End of collecting information-->
 
                     <!--Start of Buttons/navigation-->
-                    <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnFind" />
-                    <Button GridPane.rowIndex="11" GridPane.columnIndex="2" text="Cancel" onAction="#cancelToIndex" fx:id="btnCreate" />
+                    <Button GridPane.rowIndex="11" GridPane.columnIndex="0" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
+                    <Button GridPane.rowIndex="11" GridPane.columnIndex="2" text="Cancel" onAction="#cancelToIndex" fx:id="btnCancel" />
                 </children>
             </GridPane>
                 <Label text="" fx:id="lblError" />

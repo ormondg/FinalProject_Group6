@@ -22,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -35,9 +36,12 @@ import javafx.stage.Stage;
 public class FXMLEmployeeController implements Initializable {
     
     @FXML
-    private TextField txtId, txtFirstName, txtLastName, txtJobTitle, txtHireDate,
-            txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN, txtID,
+    private TextField txtID, txtFirstName, txtLastName, txtJobTitle, txtHireDate,
+            txtEndDate, txtBirthDate, txtPhone, txtEmail, txtAddres, txtSIN,
             txtPayRate;
+    
+    @FXML
+    private Button btnCreate;
     
     @FXML
     private Label lblError;
@@ -48,6 +52,10 @@ public class FXMLEmployeeController implements Initializable {
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
+    private static int currentRecord;
+    private static String fileReference;
+    
+    
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
     FileInputStream fi; // create file input reference
@@ -105,7 +113,19 @@ public class FXMLEmployeeController implements Initializable {
         
         if (e.validate()){ // vaidate the employee
             lblError.setText("");
-            switch (e.getType()) {
+            if (currentRecord != -1){
+                deleteEmployeeRecord();
+            }
+            createNewEmployee(e);
+            return true; // employee created sucessfuly
+        }else{ // false validation
+            lblError.setText(e.errors); // show the error
+            return false; // return the an employee cannot be create
+        }
+    }
+    
+    public void createNewEmployee(Employee e) throws FileNotFoundException, IOException{
+        switch (e.getType()) {
                 case "Manager": // write to the manager file
                     allManagers.add(allManagers.size(), e);  // add the crew refence to the end of the array
                     fo = new FileOutputStream("Manager.bat"); // get file 
@@ -127,14 +147,40 @@ public class FXMLEmployeeController implements Initializable {
                     os.writeObject(allCrew); // write object
                     os.close(); // close file
                     break;
-            }
-                /*
-                    used for writing objects to file
-                */
-            return true; // employee created sucessfuly
-        }else{ // false validation
-            lblError.setText(e.errors); // show the error
-            return false; // return the an employee cannot be create
+        }
+    }
+    
+    public void editEmployeeInformation(Employee e, int recordRef){
+        currentRecord = recordRef;
+        txtLastName.setText(e.getLastName());
+        txtFirstName.setText(e.getFirstName());
+        txtBirthDate.setText(e.getBirthDate());
+        cmbGender.setValue(e.getGender());
+        txtPhone.setText(e.getPhone());
+        txtEmail.setText(e.getEmail());
+        txtAddres.setText(e.getAddress());
+        txtHireDate.setText(e.getHireDate());
+        txtSIN.setText(e.getSIN());
+        txtID.setText(e.getEmployeeID());
+        cmbCategory.setValue(e.getType());
+        cmbPayMethod.setValue(e.getPayMethod());
+        txtPayRate.setText(e.getRateOfPay());
+        btnCreate.setText("Update");
+        fileReference = e.getType();
+    }
+    
+    
+    public void deleteEmployeeRecord(){
+        switch (fileReference) {
+                case "Manager": // write to the manager file
+                    allManagers.remove(currentRecord);
+                    break;
+                case "Crew Trainer": // write to the crew trainer file
+                    allCrewTrainers.remove(currentRecord);
+                    break;
+                case "Crew": // write to the general crew file
+                    allCrew.remove(currentRecord);
+                    break;
         }
     }
 
@@ -147,6 +193,10 @@ public class FXMLEmployeeController implements Initializable {
         cmbGender.getItems().addAll("Male","Female"); 
         cmbPayMethod.getItems().addAll("Hourly", "Salary");
         cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
+        
+        currentRecord = -1;
+        fileReference = "";
+        
         
         /*
             Used for object writing to file
@@ -186,6 +236,6 @@ public class FXMLEmployeeController implements Initializable {
         } catch (FileNotFoundException ex) { // no file or info
         } catch (IOException | ClassNotFoundException ex) { // no file or info
         }
-    }    
+    }
     
 }

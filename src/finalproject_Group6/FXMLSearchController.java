@@ -14,6 +14,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +53,7 @@ public class FXMLSearchController implements Initializable {
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
-    private static Employee editRecord; // list for all Crew
+    private static Employee editRecord; 
     private static int currentEditRecord = 0;
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
@@ -168,8 +170,12 @@ public class FXMLSearchController implements Initializable {
             }
         }
 
-        
-        
+        Comparator<Employee> compareById = (Employee e1, Employee e2) -> {
+            Integer id1 = Integer.parseInt(e1.getEmployeeID());
+            Integer id2 = Integer.parseInt(e2.getEmployeeID());
+            return id1.compareTo(id2);
+        };
+        Collections.sort(allRecords, compareById);
     }
     
     /*
@@ -204,7 +210,7 @@ public class FXMLSearchController implements Initializable {
                     Button b = (Button) event.getSource();
                     editRecord = allRecords.get(Integer.parseInt(b.getId()));
                     try {
-                        searchForEditRecord();
+                        searchForEditRecord(event);
                     } catch (IOException ex) {
                     }
                 });
@@ -224,19 +230,19 @@ public class FXMLSearchController implements Initializable {
             }
     }
     
-    private void searchForEditRecord() throws IOException{
+    private void searchForEditRecord(ActionEvent event) throws IOException{
         switch (editRecord.getType()) {
             case "Crew":
                 for (int i = 0; i < allCrew.size(); i ++){
                     if (editRecord == allCrew.get(i)){
-                        System.out.println(i);
+                        currentEditRecord = i;
                     }
                 }   
                 break;
             case "Crew Trainer":
                 for (int i = 0; i < allCrewTrainers.size(); i ++){
                     if (editRecord == allCrewTrainers.get(i)){
-                        System.out.println(i);
+                        currentEditRecord = i;
                     }
                 }   
                 break;
@@ -244,16 +250,18 @@ public class FXMLSearchController implements Initializable {
                 for (int i = 0; i < allManagers.size(); i ++){
                     if (editRecord == allManagers.get(i)){
                         currentEditRecord = i;
-                        System.out.println(i);
                     }
                 }   
                 break;
         }
-        Parent set = FXMLLoader.load(getClass().getResource("FXMLEmployee.fxml")); // get FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEmployee.fxml")); // get FXML
+        Parent set = (Parent) loader.load(); // load the fxml
+        FXMLEmployeeController controller = loader.getController(); // get the second controller
+        controller.editEmployeeInformation(editRecord, currentEditRecord);
         Scene setScene = new Scene(set); // create the scene
-        Stage stage = new Stage(); // create the stage
-        stage.setScene(setScene);  // set scene
-        stage.show(); // set the stage
+        Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
+        setStage.setScene(setScene);  // set scene
+        setStage.show(); // set the stage
         
     }
     
