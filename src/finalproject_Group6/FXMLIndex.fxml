@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLIndexController">
+    <children>
+        <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+            <children>
+                
+                <Label text="Employee Records" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTitle" />
+                <Label text="First Name" GridPane.rowIndex="1" GridPane.columnIndex="1" fx:id="lblFirstName" />
+                <Label text="Last Name" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblLastName" />
+                <Label text="Employee Id" GridPane.rowIndex="1" GridPane.columnIndex="2" fx:id="lblId" />
+                
+                <Label text="Catagory" GridPane.rowIndex="4" GridPane.columnIndex="0" fx:id="lblCategory" />
+                <Label text="Pay Method" GridPane.rowIndex="4" GridPane.columnIndex="1" fx:id="lblPayMethod" />
+                <Label text="Current Status" GridPane.rowIndex="4" GridPane.columnIndex="2" fx:id="lblStatus" />
+                
+                <TextField GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="txtLastName" />
+                <TextField GridPane.rowIndex="2" GridPane.columnIndex="1" fx:id="txtFirstName" />
+                <TextField GridPane.rowIndex="2" GridPane.columnIndex="2" fx:id="txtId" />
+                
+                <ComboBox GridPane.rowIndex="5" GridPane.columnIndex="0" fx:id="cmbCategory" promptText="Select" />
+                <ComboBox GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="cmbPayMethod" promptText="Select" />
+                <ComboBox GridPane.rowIndex="5" GridPane.columnIndex="2" fx:id="cmbStatus" promptText="Select" />
+                
+                <Button GridPane.rowIndex="10" GridPane.columnIndex="0" text="Find" onAction="#showRecordPage" fx:id="btnFind" />
+                <Button GridPane.rowIndex="10" GridPane.columnIndex="2" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
+                
+                <Label text="" GridPane.rowIndex="11" GridPane.columnIndex="0" fx:id="lblError" />
+            </children>
+        </GridPane>
+        
+    </children>
+</AnchorPane>
+
