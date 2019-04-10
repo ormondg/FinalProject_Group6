@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,7 +26,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -55,6 +53,8 @@ public class FXMLEmployeeController implements Initializable {
     @FXML
     HBox HBoxNav;
     
+    public String [] appliedFilters = new String[6];
+    
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
@@ -70,6 +70,17 @@ public class FXMLEmployeeController implements Initializable {
     ObjectOutputStream os;  // create object output reference
     
     /*
+        Transfer the filters between files
+    */
+    public void getFilters(String [] filters){
+        appliedFilters = filters;
+    }
+    
+    public void setRecordPage(int r){
+        currentRecord = r;
+    }
+    
+    /*
         Create an Employee
     
     */
@@ -78,7 +89,15 @@ public class FXMLEmployeeController implements Initializable {
         
         // try to create an employee
         if(createEmployee()){ // sucessful == move on to next page
-            Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
+            Parent set;
+            if(currentRecord == -1){
+                set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
+            }else{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
+                set = (Parent) loader.load(); // load the fxml
+                FXMLSearchController controllerTwo = loader.getController(); // get the second controller
+                controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
+            }
             Scene setScene = new Scene(set); // create the scene
             Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
             setStage.setScene(setScene);  // set scene
@@ -93,8 +112,15 @@ public class FXMLEmployeeController implements Initializable {
     */
     @FXML
     private void cancelToIndex(ActionEvent event) throws IOException {
-        // go back to the index page
-        Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
+        Parent set;
+        if(currentRecord == -1){
+            set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
+        }else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
+            set = (Parent) loader.load(); // load the fxml
+            FXMLSearchController controllerTwo = loader.getController(); // get the second controller
+            controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
+        }
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
@@ -107,66 +133,24 @@ public class FXMLEmployeeController implements Initializable {
     @FXML
     private void deleteRecord(ActionEvent event) throws IOException {
         deleteEmployeeRecord();
-        switch (currentEmployee.getType()) {
-                case "Manager": // write to the manager file
-                    fo = new FileOutputStream("Manager.bat"); // get file 
-                    os = new ObjectOutputStream(fo);
-                    os.writeObject(allManagers); // write object
-                    os.close(); // close file
-                    break;
-                case "Crew Trainer": // write to the crew trainer file
-                    fo = new FileOutputStream("Trainer.bat");
-                    os = new ObjectOutputStream(fo);
-                    os.writeObject(allCrewTrainers);
-                    os.close();
-                    break;
-                case "Crew": // write to the general crew file
-                    fo = new FileOutputStream("Crew.bat"); // get file 
-                    os = new ObjectOutputStream(fo);
-                    os.writeObject(allCrew); // write object
-                    os.close(); // close file
-                    break;
-            }
-        // go back to the index page
-        Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
+        
+        writeToFile(currentEmployee.getType());
+        Parent set;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
+        set = (Parent) loader.load(); // load the fxml
+        FXMLSearchController controllerTwo = loader.getController(); // get the second controller
+        controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage
     }
     
-    private boolean createEmployee() throws FileNotFoundException, IOException{
-        Employee e = new Employee();// create an employee reference
-        // take all the info form the form into the employee reference
-        e.setLastName(txtLastName.getText());
-        e.setFirstName(txtFirstName.getText());  
-        e.setBirthDate(txtBirthDate.getText());
-        e.setGender((String) cmbGender.getValue()); 
-        e.setPhone(txtPhone.getText()); 
-        e.setEmail(txtEmail.getText()); 
-        e.setAddress(txtAddres.getText()); 
-        e.setHireDate(txtHireDate.getText()); 
-        e.setSIN(txtSIN.getText()); 
-        e.setEmployeeID(txtID.getText()); 
-        e.setType((String) cmbCategory.getValue()); 
-        e.setPayMethod((String) cmbPayMethod.getValue());   
-        e.setRateOfPay(txtPayRate.getText()); 
-        
-        if (e.validate()){ // vaidate the employee
-            lblError.setText("");
-            if (currentRecord != -1){
-                deleteEmployeeRecord();
-            }
-            createNewEmployee(e);
-            return true; // employee created sucessfuly
-        }else{ // false validation
-            lblError.setText(e.errors); // show the error
-            return false; // return the an employee cannot be create
-        }
-    }
-    
-    public void createNewEmployee(Employee e) throws FileNotFoundException, IOException{
-        switch (e.getType()) {
+    /*
+        Add and wirte to a file
+    */
+    private void addAndWriteToFile(String type, Employee e) throws FileNotFoundException, IOException{
+        switch (type) {
                 case "Manager": // write to the manager file
                     allManagers.add(allManagers.size(), e);  // add the crew refence to the end of the array
                     fo = new FileOutputStream("Manager.bat"); // get file 
@@ -189,10 +173,13 @@ public class FXMLEmployeeController implements Initializable {
                     os.close(); // close file
                     break;
         }
-        
-        // re wright the last file the record was in
-        if (!currentEmployee.getEmployeeID().equals("-1")){ // editing a record
-            switch (currentEmployee.getType()) {
+    }
+    
+    /*
+        reright a file
+    */
+    private void writeToFile(String type) throws FileNotFoundException, IOException{
+        switch (type) {
                 case "Manager": // write to the manager file
                     fo = new FileOutputStream("Manager.bat"); // get file 
                     os = new ObjectOutputStream(fo);
@@ -211,7 +198,6 @@ public class FXMLEmployeeController implements Initializable {
                     os.writeObject(allCrew); // write object
                     os.close(); // close file
                     break;
-            }
         }
     }
     
@@ -255,6 +241,46 @@ public class FXMLEmployeeController implements Initializable {
         });
         
         HBoxNav.getChildren().add(button);
+    }
+    
+    public void createNewEmployee(Employee e) throws FileNotFoundException, IOException{
+        
+        addAndWriteToFile(e.getType(), e);
+        // re wright the last file the record was in
+        if (!currentEmployee.getEmployeeID().equals("-1")){ // editing a record
+            writeToFile(currentEmployee.getType());
+        }
+    }
+    
+    private boolean createEmployee() throws FileNotFoundException, IOException{
+        Employee e = new Employee();// create an employee reference
+        // take all the info form the form into the employee reference
+        e.setLastName(txtLastName.getText());
+        e.setFirstName(txtFirstName.getText());  
+        e.setBirthDate(txtBirthDate.getText());
+        e.setGender((String) cmbGender.getValue()); 
+        e.setPhone(txtPhone.getText()); 
+        e.setEmail(txtEmail.getText()); 
+        e.setAddress(txtAddres.getText()); 
+        e.setHireDate(txtHireDate.getText()); 
+        e.setSIN(txtSIN.getText()); 
+        e.setEmployeeID(txtID.getText()); 
+        e.setType((String) cmbCategory.getValue()); 
+        e.setPayMethod((String) cmbPayMethod.getValue());   
+        e.setRateOfPay(txtPayRate.getText()); 
+        
+        if (e.validate()){ // vaidate the employee
+            System.out.println("d");
+            lblError.setText("");
+            if (currentRecord > -1){
+                deleteEmployeeRecord();
+            }
+            createNewEmployee(e);
+            return true; // employee created sucessfuly
+        }else{ // false validation
+            lblError.setText(e.errors); // show the error
+            return false; // return the an employee cannot be create
+        }
     }
     
     /*

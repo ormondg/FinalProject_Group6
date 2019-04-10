@@ -80,7 +80,11 @@ public class FXMLSearchController implements Initializable {
     */
     @FXML
     private void createEmployeeButton(ActionEvent event) throws IOException {
-        Parent set = FXMLLoader.load(getClass().getResource("FXMLEmployee.fxml")); // get FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEmployee.fxml")); // get FXML
+        Parent set = (Parent) loader.load(); // load the fxml
+        FXMLEmployeeController controller = loader.getController(); // get the second controller
+        controller.getFilters(appliedFilters);
+        controller.setRecordPage(-2);
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
@@ -300,6 +304,7 @@ public class FXMLSearchController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLEmployee.fxml")); // get FXML
         Parent set = (Parent) loader.load(); // load the fxml
         FXMLEmployeeController controller = loader.getController(); // get the second controller
+        controller.getFilters(appliedFilters);
         controller.editEmployeeInformation(editRecord, currentEditRecord);
         Scene setScene = new Scene(set); // create the scene
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
@@ -324,6 +329,8 @@ public class FXMLSearchController implements Initializable {
             allManagers = new ArrayList(); //setup array list
             allCrewTrainers = new ArrayList(); //setup array list
             allCrew = new ArrayList(); //setup array list
+            
+            editRecord = new Employee();
             
             recordPage = 0; // put the user on the first page
             
