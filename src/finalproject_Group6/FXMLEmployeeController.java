@@ -44,7 +44,7 @@ public class FXMLEmployeeController implements Initializable {
     private Button btnCreate;
     
     @FXML
-    private Label lblError;
+    private Label lblError, lblStatusShow;
     
     @FXML
     ComboBox cmbGender, cmbPayMethod, cmbCategory;
@@ -150,7 +150,8 @@ public class FXMLEmployeeController implements Initializable {
                     break;
         }
         
-        if (!currentEmployee.getEmployeeID().equals("-1")){
+        // re wright the last file the record was in
+        if (!currentEmployee.getEmployeeID().equals("-1")){ // editing a record
             switch (currentEmployee.getType()) {
                 case "Manager": // write to the manager file
                     fo = new FileOutputStream("Manager.bat"); // get file 
@@ -195,6 +196,7 @@ public class FXMLEmployeeController implements Initializable {
         cmbCategory.setValue(e.getType());
         cmbPayMethod.setValue(e.getPayMethod());
         txtPayRate.setText(e.getRateOfPay());
+        lblStatusShow.setText(e.getIsActive());
         btnCreate.setText("Update"); // change the button name
     }
     
@@ -202,7 +204,6 @@ public class FXMLEmployeeController implements Initializable {
         deletes an employee record
     */
     public void deleteEmployeeRecord(){
-        System.out.println(currentEmployee.getType());
         switch (currentEmployee.getType()) {
                 case "Manager": // write to the manager file
                     allManagers.remove(currentRecord);

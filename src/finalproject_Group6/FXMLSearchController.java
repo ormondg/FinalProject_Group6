@@ -17,14 +17,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,6 +43,9 @@ public class FXMLSearchController implements Initializable {
     @FXML
     private VBox VBoxRecords;
     
+    @FXML
+    private Label lblPages;
+    
     public String [] appliedFilters;
     
     private static ArrayList<Employee> allRecords; // list for all Crew
@@ -55,11 +54,14 @@ public class FXMLSearchController implements Initializable {
     private static ArrayList<Employee> allCrew; // list for all Crew
     private static Employee editRecord; 
     private static int currentEditRecord = 0;
+    private static final int SHOW_RECORDS = 2;
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
     FileInputStream fi; // create file input reference
     ObjectInputStream oi; // create object input reference
     ObjectOutputStream os;  // create object output reference
+    
+    private int recordPage;
     
     /*
         Back to the index button
@@ -85,9 +87,28 @@ public class FXMLSearchController implements Initializable {
         setStage.show(); // set the stage
     }
     
+    @FXML
+    private void backRecordsButton(ActionEvent event) throws IOException {
+        if (recordPage != 0){
+            recordPage -= SHOW_RECORDS;
+            showRecords();
+        }
+    }
+    
+    @FXML
+    private void nextRecordsButton(ActionEvent event) throws IOException {
+        if (recordPage + SHOW_RECORDS < allRecords.size()){
+            recordPage += SHOW_RECORDS;
+            showRecords();
+        }
+    }
+    
+    /*
+        get the filter input from the user
+    */
     public boolean getFilters(String [] filters){
         appliedFilters = filters;
-        if (!appliedFilters[2].equals("")){
+        if (!appliedFilters[2].equals("")){ // id filter
             try{ // try to turn the number String into real Numbers
                 int testNum = Integer.parseInt(appliedFilters[2]); // inputed id
             }catch(NumberFormatException e){ // one is not a number
@@ -98,6 +119,9 @@ public class FXMLSearchController implements Initializable {
         return true;
     }
     
+    /*
+        show all the applied filters
+    */
     private void showFilters(){
         
         for (String appliedFilter : appliedFilters) { // loop through the filters
@@ -184,9 +208,17 @@ public class FXMLSearchController implements Initializable {
     private void showRecords(){
         
         sortRecords(); // sort the records first
+        VBoxRecords.getChildren().clear();// clear all the records
+        int totalPages = (allRecords.size()/SHOW_RECORDS); // get the total full pages
+        if(allRecords.size()%SHOW_RECORDS != 0){ // half a page is there
+            totalPages ++; // add a page to the total
+        }
+        lblPages.setText("Page: " + ((recordPage/SHOW_RECORDS) + 1) + " of " + totalPages); // set the pages label
         
-        for (int i = 0; i < allRecords.size(); i ++){ // loop through all the records
-                
+        // run until record size or endrecord = 0
+        int endRecord = SHOW_RECORDS ; // go farward 15 records counter
+        for (int i = recordPage; i < allRecords.size(); i ++){ // loop through all the records
+                endRecord --; // down one record on the counter
                 Label name = new Label(allRecords.get(i).getFirstName() + " " + allRecords.get(i).getLastName()); // create a label of the name
                 Label id = new Label(allRecords.get(i).getEmployeeID()); // create a label of the ID
                 Label phone = new Label(allRecords.get(i).getPhone()); // create a label of the phone number
@@ -227,6 +259,11 @@ public class FXMLSearchController implements Initializable {
                 
                 //add the hbox to the records vbox in the fxml document
                 VBoxRecords.getChildren().add(box);
+                
+                // done showing max number of records per page
+                if (endRecord == 0){
+                    break; // stop showing
+                }
                 
             }
     }
@@ -287,6 +324,8 @@ public class FXMLSearchController implements Initializable {
             allManagers = new ArrayList(); //setup array list
             allCrewTrainers = new ArrayList(); //setup array list
             allCrew = new ArrayList(); //setup array list
+            
+            recordPage = 0; // put the user on the first page
             
             
             /*
