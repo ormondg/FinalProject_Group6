@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Author: Graham Ormond, Pawel Babiarz
+Final Project Group 6
+Thursday, April 11 2019 */
 package finalproject_Group6;
 
 import javafx.application.Application;
@@ -13,7 +11,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Graham
+ * @author Graham Ormond, Pawel Babiarz
  */
 public class FinalProject extends Application {
     

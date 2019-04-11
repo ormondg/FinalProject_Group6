@@ -29,7 +29,7 @@
                 <ComboBox GridPane.rowIndex="5" GridPane.columnIndex="1" fx:id="cmbPayMethod" promptText="Select" />
                 <ComboBox GridPane.rowIndex="5" GridPane.columnIndex="2" fx:id="cmbStatus" promptText="Select" />
                 
-                <Button GridPane.rowIndex="10" GridPane.columnIndex="0" text="Find" onAction="#showRecordPage" fx:id="btnFind" />
+                <Button GridPane.rowIndex="10" GridPane.columnIndex="0" text="Search" onAction="#showRecordPage" fx:id="btnFind" />
                 <Button GridPane.rowIndex="10" GridPane.columnIndex="2" text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
                 
                 <Label text="" GridPane.rowIndex="11" GridPane.columnIndex="0" fx:id="lblError" />

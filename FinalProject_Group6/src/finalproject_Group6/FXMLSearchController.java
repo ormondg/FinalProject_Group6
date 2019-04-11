@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Author: Graham Ormond, Pawel Babiarz
+Final Project Group 6
+Thursday, April 11 2019 */
 package finalproject_Group6;
 
 import java.io.File;
@@ -33,7 +31,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Graham
+ * @author Graham Ormond, Pawel Babiarz
  */
 public class FXMLSearchController implements Initializable {
     
@@ -48,20 +46,26 @@ public class FXMLSearchController implements Initializable {
     
     public String [] appliedFilters;
     
+    // arraylist for each file and one for a total record
     private static ArrayList<Employee> allRecords; // list for all Crew
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
+    
+    // used for editing records
     private static Employee editRecord; 
     private static int currentEditRecord = 0;
-    private static final int SHOW_RECORDS = 2;
+    
+    // reading and writing to a file
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
     FileInputStream fi; // create file input reference
     ObjectInputStream oi; // create object input reference
     ObjectOutputStream os;  // create object output reference
-    
+   
+    // track the records when showing
     private int recordPage;
+    private static final int SHOW_RECORDS = 2;
     
     /*
         Back to the index button
@@ -95,19 +99,25 @@ public class FXMLSearchController implements Initializable {
         setStage.show(); // set the stage
     }
     
+    /*
+        Go back a record page
+    */
     @FXML
     private void backRecordsButton(ActionEvent event) throws IOException {
-        if (recordPage != 0){
-            recordPage -= SHOW_RECORDS;
-            showRecords();
+        if (recordPage != 0){ // not on first page
+            recordPage -= SHOW_RECORDS; // subract the amount per page
+            showRecords(); // redisplay the records
         }
     }
     
+    /*
+        Go farward a record page
+    */
     @FXML
     private void nextRecordsButton(ActionEvent event) throws IOException {
-        if (recordPage + SHOW_RECORDS < allRecords.size()){
-            recordPage += SHOW_RECORDS;
-            showRecords();
+        if (recordPage + SHOW_RECORDS < allRecords.size()){ // not the last page
+            recordPage += SHOW_RECORDS; // go forwayd the amount of records per page
+            showRecords(); //  redisplay the records
         }
     }
     
@@ -115,16 +125,16 @@ public class FXMLSearchController implements Initializable {
         get the filter input from the user
     */
     public boolean getFilters(String [] filters){
-        appliedFilters = filters;
-        if (!appliedFilters[2].equals("")){ // id filter
-            try{ // try to turn the number String into real Numbers
+        appliedFilters = filters; // get filters
+        if (!appliedFilters[2].equals("")){ // id filter set
+            try{ // try to turn the input String into real Number
                 int testNum = Integer.parseInt(appliedFilters[2]); // inputed id
-            }catch(NumberFormatException e){ // one is not a number
+            }catch(NumberFormatException e){ // input is not a number
                 return false; // validation failed
             }
         }
-        showFilters();
-        return true;
+        showFilters(); // display the filters
+        return true; // id was a number
     }
     
     /*
@@ -218,23 +228,26 @@ public class FXMLSearchController implements Initializable {
         sortRecords(); // sort the records first
         VBoxRecords.getChildren().clear();// clear all the records
         int totalPages = (allRecords.size()/SHOW_RECORDS); // get the total full pages
-        int page = (recordPage/SHOW_RECORDS);
-        if (allRecords.isEmpty()){
-            page = 0;
+        int page = (recordPage/SHOW_RECORDS); // get the page the user is veiwing
+        if (allRecords.isEmpty()){ // no records
+            page = 0; // no pages
         }
         else{
-            page ++;
+            page ++; // one page for remaineres
         }
+        
         if(allRecords.size()%SHOW_RECORDS != 0){ // half a page is there
             totalPages ++; // add a page to the total
         }
         lblPages.setText("Page: " + page + " of " + totalPages); // set the pages label
         
-        if (allRecords.isEmpty()){
+        // no records found
+        if (allRecords.isEmpty()){ // empty list
+            // create and show a label
             Label label = new Label("No Records Found");
             VBoxRecords.getChildren().add(label);
-        }else{
-            // run until record size or endrecord = 0
+        }else{ // display the records
+            // run until record size or endrecord = 0 for page cut off
             int endRecord = SHOW_RECORDS ; // go farward 15 records counter
             for (int i = recordPage; i < allRecords.size(); i ++){ // loop through all the records
                     endRecord --; // down one record on the counter
@@ -244,10 +257,6 @@ public class FXMLSearchController implements Initializable {
                     Label status = new Label(allRecords.get(i).getIsActive()); // create a labal of the active status
 
                     // set the labels min/max width
-                    
-                    
-                    
-                    
                     name.setMinWidth(200);
                     name.setMaxWidth(200);
                     id.setMinWidth(145);

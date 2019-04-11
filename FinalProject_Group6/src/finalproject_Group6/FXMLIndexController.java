@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Author: Graham Ormond, Pawel Babiarz
+Final Project Group 6
+Thursday, April 11 2019 */
 package finalproject_Group6;
 
 import java.io.IOException;
@@ -22,8 +20,8 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
- * @author Graham
+ * 
+ * @author Graham Ormond, Pawel Babiarz
  */
 public class FXMLIndexController implements Initializable {
     
@@ -54,6 +52,9 @@ public class FXMLIndexController implements Initializable {
         setStage.show(); // set the stage
     }
     
+    /*
+        Button to the veiwing of records
+    */
     @FXML
     private void showRecordPage(ActionEvent event) throws IOException {
         getFilterInput();
@@ -72,6 +73,9 @@ public class FXMLIndexController implements Initializable {
         } 
     }
     
+    /*
+        get the users filter input
+    */
     public void getFilterInput(){
         //setup filter array
         appliedFilters[0] = txtLastName.getText();

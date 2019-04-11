@@ -11,7 +11,7 @@
         <Label text="Employees" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="lblEmployees" />
         <Button GridPane.rowIndex="0" GridPane.columnIndex="1" text="Back" onAction="#backToIndex" fx:id="btnBack" />
         
-        <!-- -->
+        <!-- Display all the filters applied -->
         <VBox GridPane.rowIndex="1" GridPane.columnIndex="0">
             <Label text="Filters:" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblFilters" />
             <HBox fx:id="HBoxFilters" spacing="10">

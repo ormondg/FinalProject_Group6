@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Author: Graham Ormond, Pawel Babiarz
+Final Project Group 6
+Thursday, April 11 2019 */
 package finalproject_Group6;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 /**
  *
- * @author Graham
+ * @author Graham Ormond, Pawel Babiarz
  */
 
 public class Employee implements Serializable{
@@ -31,12 +29,16 @@ public class Employee implements Serializable{
         Validate the entered information
     */
     public ArrayList <String> validate(){
+        // gather all the errors
         ArrayList <String> errors;
-        errors = new ArrayList();
+        errors = new ArrayList(); 
+        
+        // create number reference
         int num1, num3;
         num1 = 0;
-        double num2 = 0; // create number reference
-        num3 = 0; // create number reference
+        num3 = 0; 
+        double num2 = 0;
+        
         
         try{ // try to turn the number String into real Numbers
             num1 = Integer.parseInt(getEmployeeID()); // inputed id
@@ -67,7 +69,7 @@ public class Employee implements Serializable{
         }
         // return the error list
         
-        return errors;
+        return errors; // return the errors
             
     }
 

@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Author: Graham Ormond, Pawel Babiarz
+Final Project Group 6
+Thursday, April 11 2019 */
 package finalproject_Group6;
 
 import java.io.File;
@@ -37,7 +35,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Graham
+ * @author Graham Ormond, Pawel Babiarz
  */
 public class FXMLEmployeeController implements Initializable {
     
@@ -63,14 +61,17 @@ public class FXMLEmployeeController implements Initializable {
     
     public String [] appliedFilters = new String[6];
     
+    // array list for each file
     private static ArrayList<Employee> allManagers; // list for managers
     private static ArrayList<Employee> allCrewTrainers; // list for crewTrainers
     private static ArrayList<Employee> allCrew; // list for all Crew
+    
+    // array current employee being edited 
     private static Employee currentEmployee;
     private static int currentRecord;
     private static String fileReference;
     
-    
+    // read and write to files
     File file; // create a file reference
     FileOutputStream fo; // create file output reference
     FileInputStream fi; // create file input reference
@@ -84,8 +85,13 @@ public class FXMLEmployeeController implements Initializable {
         appliedFilters = filters;
     }
     
+    /*
+        get reference for what screen to switch back to
+        by default it is -1. this method will be set to 
+        -2 for going back to the veiwing employees page
+    */
     public void setRecordPage(int r){
-        currentRecord = r;
+        currentRecord = r; // set to -2
     }
     
     /*
@@ -144,15 +150,18 @@ public class FXMLEmployeeController implements Initializable {
     */
     @FXML
     private void deleteRecord(ActionEvent event) throws IOException {
+        // create an alert before deleting the record
         Alert alert = new Alert(AlertType.WARNING, 
                         "Are you sure you want to delete this record?", 
                         ButtonType.YES, ButtonType.NO);
-
+        
+        // wait to get selection by the user
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.YES){
-            deleteEmployeeRecord();
-            writeToFile(currentEmployee.getType());
-            Parent set;
+        if (result.get() == ButtonType.YES){ // user selected delete again
+            // delete the record
+            deleteEmployeeRecord(); // delete method
+            writeToFile(currentEmployee.getType()); // re wright the file it was in
+            Parent set; 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
             set = (Parent) loader.load(); // load the fxml
             FXMLSearchController controllerTwo = loader.getController(); // get the second controller
@@ -163,12 +172,12 @@ public class FXMLEmployeeController implements Initializable {
             Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
             setStage.setScene(setScene);  // set scene
             setStage.show(); // set the stage
-        } else {
+        } else { // cancel
         }
     }
     
     /*
-        Add and wirte to a file
+        Add a employee and wirte to a file
     */
     private void addAndWriteToFile(String type, Employee e) throws FileNotFoundException, IOException{
         switch (type) {
@@ -264,15 +273,21 @@ public class FXMLEmployeeController implements Initializable {
         HBoxNav.getChildren().add(button);
     }
     
+    /*
+        Create a New employee.
+    */
     public void createNewEmployee(Employee e) throws FileNotFoundException, IOException{
         
-        addAndWriteToFile(e.getType(), e);
-        // re wright the last file the record was in
+        addAndWriteToFile(e.getType(), e); // add and write method
+        // re write the last file the record was in
         if (!currentEmployee.getEmployeeID().equals("-1")){ // editing a record
-            writeToFile(currentEmployee.getType());
+            writeToFile(currentEmployee.getType()); // wirte to file based on employee type
         }
     }
     
+    /*
+        setting and creating of the employee
+    */
     private boolean createEmployee() throws FileNotFoundException, IOException{
         ArrayList <String> errors = new ArrayList();
         Employee e = new Employee();// create an employee reference
@@ -294,13 +309,14 @@ public class FXMLEmployeeController implements Initializable {
         errors = e.validate();// get any errors that happend
         if (errors.isEmpty()){ // vaidate the employee
             
-            if (currentRecord > -1){
-                deleteEmployeeRecord();
+            if (currentRecord > -1){ // editing a record
+                deleteEmployeeRecord(); // delete it from the file it was in
             }
-            createNewEmployee(e);
+            createNewEmployee(e); // add it to the right file
             return true; // employee created sucessfuly
         }else{ // false validation
-            for (String error : errors) {
+            for (String error : errors) { // loop through the erros
+                // display each error with a label
                 Label lbl = new Label(error);
                 VBoxErrors.getChildren().add(lbl);
             }
@@ -335,6 +351,7 @@ public class FXMLEmployeeController implements Initializable {
         cmbPayMethod.getItems().addAll("Hourly", "Salary");
         cmbCategory.getItems().addAll("Crew","Crew Trainer", "Manager");
         
+        // keep track of records
         currentRecord = -1;
         currentEmployee = new Employee();
         fileReference = "";
