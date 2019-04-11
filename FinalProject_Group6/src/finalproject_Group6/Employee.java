@@ -6,7 +6,7 @@
 package finalproject_Group6;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 /**
  *
  * @author Graham
@@ -17,14 +17,12 @@ public class Employee implements Serializable{
 
     // information held in Strings to advoid user input errors
     private String firstName, lastName, hireDate, endDate, province, phone, address, birthDate, email, employeeID, SIN, rateOfPay, gender, type, payMethod;
-    public String errors;
     private boolean isSalary, isActive;
     
     Employee(){
         employeeID = "-1";
         firstName = "";
         lastName = "";
-        errors = "";
         isActive = true; // default the crew to active when create
     }
 
@@ -32,27 +30,28 @@ public class Employee implements Serializable{
     /*
         Validate the entered information
     */
-    public boolean validate(){
-        errors = ""; // reset the error
-        int num1, num3; // create number reference
-        double num2; // create number reference
+    public ArrayList <String> validate(){
+        ArrayList <String> errors;
+        errors = new ArrayList();
+        int num1, num3;
+        num1 = 0;
+        double num2 = 0; // create number reference
+        num3 = 0; // create number reference
+        
         try{ // try to turn the number String into real Numbers
             num1 = Integer.parseInt(getEmployeeID()); // inputed id
             num2 = Double.parseDouble(getRateOfPay()); // inputed rate of pay
             num3 = Integer.parseInt(getSIN()); // inputed SIN
         }catch(NumberFormatException e){ // one is not a number
-            errors = "please enter the * feilds correctly"; // set error
-            return false; // validation failed
+            errors.add("Employee ID, Rate of pay, and SIN must be a number");
         }
         
         if (lastName.equals("") && firstName.equals("")){ // employee name not set
-            errors = "please enter the * feilds correctly"; // set error
-            return false; // validation failed
+            errors.add("Missing First and Last Name");
         }
         
-        if (num1 < 0 && num1 < 0 && num3 < 0){ // numbers entered are below zero
-            errors = "please enter the * feilds correctly"; // set error
-            return false; // validation failed 
+        if (num1 < 0 && num2 < 0 && num3 < 0){ // numbers entered are below zero
+           errors.add("Numbers must be above zero");
         }
         
         if (type == null){ // did not select an employee type
@@ -66,8 +65,9 @@ public class Employee implements Serializable{
         if (phone.equals("")){ // phone number not set
             phone = "N/A"; // default set its text
         }
+        // return the error list
         
-        return true; // validation secussful 
+        return errors;
             
     }
 

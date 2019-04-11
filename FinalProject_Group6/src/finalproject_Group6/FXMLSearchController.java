@@ -70,6 +70,8 @@ public class FXMLSearchController implements Initializable {
     private void backToIndex(ActionEvent event) throws IOException {
         Parent set = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // get FXML
         Scene setScene = new Scene(set); // create the scene
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        setScene.getStylesheets().add(css);
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage
@@ -86,6 +88,8 @@ public class FXMLSearchController implements Initializable {
         controller.getFilters(appliedFilters);
         controller.setRecordPage(-2);
         Scene setScene = new Scene(set); // create the scene
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        setScene.getStylesheets().add(css);
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage
@@ -214,62 +218,78 @@ public class FXMLSearchController implements Initializable {
         sortRecords(); // sort the records first
         VBoxRecords.getChildren().clear();// clear all the records
         int totalPages = (allRecords.size()/SHOW_RECORDS); // get the total full pages
+        int page = (recordPage/SHOW_RECORDS);
+        if (allRecords.isEmpty()){
+            page = 0;
+        }
+        else{
+            page ++;
+        }
         if(allRecords.size()%SHOW_RECORDS != 0){ // half a page is there
             totalPages ++; // add a page to the total
         }
-        lblPages.setText("Page: " + ((recordPage/SHOW_RECORDS) + 1) + " of " + totalPages); // set the pages label
+        lblPages.setText("Page: " + page + " of " + totalPages); // set the pages label
         
-        // run until record size or endrecord = 0
-        int endRecord = SHOW_RECORDS ; // go farward 15 records counter
-        for (int i = recordPage; i < allRecords.size(); i ++){ // loop through all the records
-                endRecord --; // down one record on the counter
-                Label name = new Label(allRecords.get(i).getFirstName() + " " + allRecords.get(i).getLastName()); // create a label of the name
-                Label id = new Label(allRecords.get(i).getEmployeeID()); // create a label of the ID
-                Label phone = new Label(allRecords.get(i).getPhone()); // create a label of the phone number
-                Label status = new Label(allRecords.get(i).getIsActive()); // create a labal of the active status
-                
-                // set the labels min/max width
-                name.setMinWidth(140);
-                id.setMinWidth(140);
-                phone.setMinWidth(140);
-                status.setMinWidth(140);
-                name.setMaxWidth(140);
-                id.setMaxWidth(140);
-                phone.setMaxWidth(140);
-                status.setMaxWidth(140);
-                
-                //create a eddit button
-                Button button = new Button(); // create
-                button.setText("Edit"); // set text to edit
-                button.setId(Integer.toString(i)); // give the button the id of the array index
-                // create on action method
-                button.setOnAction((ActionEvent event) -> {
-                    Button b = (Button) event.getSource();  // get the button event
-                    editRecord = allRecords.get(Integer.parseInt(b.getId())); // get the buttons id
-                    try {
-                        searchForEditRecord(event);
-                    } catch (IOException ex) {
+        if (allRecords.isEmpty()){
+            Label label = new Label("No Records Found");
+            VBoxRecords.getChildren().add(label);
+        }else{
+            // run until record size or endrecord = 0
+            int endRecord = SHOW_RECORDS ; // go farward 15 records counter
+            for (int i = recordPage; i < allRecords.size(); i ++){ // loop through all the records
+                    endRecord --; // down one record on the counter
+                    Label name = new Label(allRecords.get(i).getFirstName() + " " + allRecords.get(i).getLastName()); // create a label of the name
+                    Label id = new Label(allRecords.get(i).getEmployeeID()); // create a label of the ID
+                    Label phone = new Label(allRecords.get(i).getPhone()); // create a label of the phone number
+                    Label status = new Label(allRecords.get(i).getIsActive()); // create a labal of the active status
+
+                    // set the labels min/max width
+                    
+                    
+                    
+                    
+                    name.setMinWidth(200);
+                    name.setMaxWidth(200);
+                    id.setMinWidth(145);
+                    id.setMaxWidth(145);
+                    phone.setMinWidth(170);
+                    phone.setMaxWidth(170);
+                    status.setMinWidth(140);
+                    status.setMaxWidth(140);
+
+                    //create a eddit button
+                    Button button = new Button(); // create
+                    button.setText("Edit"); // set text to edit
+                    button.setId(Integer.toString(i)); // give the button the id of the array index
+                    // create on action method
+                    button.setOnAction((ActionEvent event) -> {
+                        Button b = (Button) event.getSource();  // get the button event
+                        editRecord = allRecords.get(Integer.parseInt(b.getId())); // get the buttons id
+                        try {
+                            searchForEditRecord(event);
+                        } catch (IOException ex) {
+                        }
+                    });
+
+                    // create a Hbox and add all the labels
+                    HBox box = new HBox(); // create
+                    box.setSpacing(20); // set spacing
+                    box.getChildren().add(name);
+                    box.getChildren().add(id);
+                    box.getChildren().add(phone);
+                    box.getChildren().add(status);
+                    box.getChildren().add(button);
+
+                    //add the hbox to the records vbox in the fxml document
+                    VBoxRecords.getChildren().add(box);
+
+                    // done showing max number of records per page
+                    if (endRecord == 0){
+                        break; // stop showing
                     }
-                });
-                
-                // create a Hbox and add all the labels
-                HBox box = new HBox(); // create
-                box.setSpacing(20); // set spacing
-                box.getChildren().add(name);
-                box.getChildren().add(id);
-                box.getChildren().add(phone);
-                box.getChildren().add(status);
-                box.getChildren().add(button);
-                
-                //add the hbox to the records vbox in the fxml document
-                VBoxRecords.getChildren().add(box);
-                
-                // done showing max number of records per page
-                if (endRecord == 0){
-                    break; // stop showing
+
                 }
-                
-            }
+        }
     }
     
     /*
@@ -307,6 +327,8 @@ public class FXMLSearchController implements Initializable {
         controller.getFilters(appliedFilters);
         controller.editEmployeeInformation(editRecord, currentEditRecord);
         Scene setScene = new Scene(set); // create the scene
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        setScene.getStylesheets().add(css);
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage

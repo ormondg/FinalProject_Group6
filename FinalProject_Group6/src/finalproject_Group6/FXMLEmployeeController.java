@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,11 +23,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -52,6 +57,9 @@ public class FXMLEmployeeController implements Initializable {
     
     @FXML
     HBox HBoxNav;
+    
+    @FXML
+    VBox VBoxErrors;
     
     public String [] appliedFilters = new String[6];
     
@@ -99,6 +107,8 @@ public class FXMLEmployeeController implements Initializable {
                 controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
             }
             Scene setScene = new Scene(set); // create the scene
+            String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+            setScene.getStylesheets().add(css);
             Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
             setStage.setScene(setScene);  // set scene
             setStage.show(); // set the stage
@@ -122,6 +132,8 @@ public class FXMLEmployeeController implements Initializable {
             controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
         }
         Scene setScene = new Scene(set); // create the scene
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        setScene.getStylesheets().add(css);
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage
@@ -132,18 +144,27 @@ public class FXMLEmployeeController implements Initializable {
     */
     @FXML
     private void deleteRecord(ActionEvent event) throws IOException {
-        deleteEmployeeRecord();
-        
-        writeToFile(currentEmployee.getType());
-        Parent set;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
-        set = (Parent) loader.load(); // load the fxml
-        FXMLSearchController controllerTwo = loader.getController(); // get the second controller
-        controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
-        Scene setScene = new Scene(set); // create the scene
-        Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
-        setStage.setScene(setScene);  // set scene
-        setStage.show(); // set the stage
+        Alert alert = new Alert(AlertType.WARNING, 
+                        "Are you sure you want to delete this record?", 
+                        ButtonType.YES, ButtonType.NO);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.YES){
+            deleteEmployeeRecord();
+            writeToFile(currentEmployee.getType());
+            Parent set;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLSearch.fxml")); // get FXML
+            set = (Parent) loader.load(); // load the fxml
+            FXMLSearchController controllerTwo = loader.getController(); // get the second controller
+            controllerTwo.getFilters(appliedFilters);// give a method the filters to save them
+            Scene setScene = new Scene(set); // create the scene
+            String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+            setScene.getStylesheets().add(css);
+            Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
+            setStage.setScene(setScene);  // set scene
+            setStage.show(); // set the stage
+        } else {
+        }
     }
     
     /*
@@ -253,6 +274,7 @@ public class FXMLEmployeeController implements Initializable {
     }
     
     private boolean createEmployee() throws FileNotFoundException, IOException{
+        ArrayList <String> errors = new ArrayList();
         Employee e = new Employee();// create an employee reference
         // take all the info form the form into the employee reference
         e.setLastName(txtLastName.getText());
@@ -268,17 +290,20 @@ public class FXMLEmployeeController implements Initializable {
         e.setType((String) cmbCategory.getValue()); 
         e.setPayMethod((String) cmbPayMethod.getValue());   
         e.setRateOfPay(txtPayRate.getText()); 
-        
-        if (e.validate()){ // vaidate the employee
-            System.out.println("d");
-            lblError.setText("");
+        VBoxErrors.getChildren().clear();
+        errors = e.validate();// get any errors that happend
+        if (errors.isEmpty()){ // vaidate the employee
+            
             if (currentRecord > -1){
                 deleteEmployeeRecord();
             }
             createNewEmployee(e);
             return true; // employee created sucessfuly
         }else{ // false validation
-            lblError.setText(e.errors); // show the error
+            for (String error : errors) {
+                Label lbl = new Label(error);
+                VBoxErrors.getChildren().add(lbl);
+            }
             return false; // return the an employee cannot be create
         }
     }

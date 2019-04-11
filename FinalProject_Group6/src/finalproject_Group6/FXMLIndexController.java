@@ -47,6 +47,8 @@ public class FXMLIndexController implements Initializable {
     private void createEmployeeButton(ActionEvent event) throws IOException {
         Parent set = FXMLLoader.load(getClass().getResource("FXMLEmployee.fxml")); // get FXML
         Scene setScene = new Scene(set); // create the scene
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        setScene.getStylesheets().add(css);
         Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
         setStage.setScene(setScene);  // set scene
         setStage.show(); // set the stage
@@ -61,6 +63,8 @@ public class FXMLIndexController implements Initializable {
         if(controllerTwo.getFilters(appliedFilters)){// give a method the filters to save them
             Scene setScene = new Scene(set); // create the scene
             Stage setStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // create the stage
+            String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+            setScene.getStylesheets().add(css);
             setStage.setScene(setScene);  // set scene
             setStage.show(); // set the stage
         }else{

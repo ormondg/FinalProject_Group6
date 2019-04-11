@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLEmployeeController">
+<AnchorPane id="AnchorPane" prefHeight="700" prefWidth="1100" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLEmployeeController">
     <children>
         <VBox>
             <children>
@@ -61,12 +61,15 @@
                    
                 </children>
             </GridPane>
+                <Label />
                 <!--Start of Buttons/navigation-->
                 <HBox fx:id="HBoxNav" spacing="40">
                      <Button  text="Create" onAction="#createEmployeeButton" fx:id="btnCreate" />
                      <Button text="Cancel" onAction="#cancelToIndex" fx:id="btnCancel" />
                 </HBox>
-                <Label text="" fx:id="lblError" />
+                <VBox fx:id="VBoxErrors" >
+                    
+                </VBox>
             </children>
         </VBox>
     </children>

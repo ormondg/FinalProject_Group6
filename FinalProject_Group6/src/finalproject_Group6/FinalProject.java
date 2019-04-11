@@ -22,6 +22,8 @@ public class FinalProject extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLIndex.fxml")); // load index page to start
         
         Scene scene = new Scene(root);
+        String css = FinalProject.class.getResource("EmployeeCSS.css").toExternalForm();
+        scene.getStylesheets().add(css);
         
         stage.setScene(scene);
         stage.show();
