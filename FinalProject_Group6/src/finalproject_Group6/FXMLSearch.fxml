@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="700" prefWidth="1100" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject_Group6.FXMLSearchController">
     <GridPane xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-        <Label text="Employees" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="lblEmployees" />
+        <Label text="Employee Records" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="lblEmployees" styleClass="titleLabel" />
         <Button GridPane.rowIndex="0" GridPane.columnIndex="1" text="Back" onAction="#backToIndex" fx:id="btnBack" />
         
         <!-- Display all the filters applied -->

@@ -48,7 +48,7 @@ public class FXMLEmployeeController implements Initializable {
     private Button btnCreate, btnDelete;
     
     @FXML
-    private Label lblError, lblStatusShow;
+    private Label lblError, lblStatusShow, lblTitle;
     
     @FXML
     ComboBox cmbGender, cmbPayMethod, cmbCategory;
@@ -253,6 +253,7 @@ public class FXMLEmployeeController implements Initializable {
         cmbPayMethod.setValue(e.getPayMethod());
         txtPayRate.setText(e.getRateOfPay());
         lblStatusShow.setText(e.getIsActive());
+        lblTitle.setText("Edit Employee"); // change the button name
         btnCreate.setText("Update"); // change the button name
         
         //create a eddit button

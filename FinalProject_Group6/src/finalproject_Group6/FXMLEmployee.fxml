@@ -15,7 +15,7 @@
                     <!--
                         Employee Records page
                     -->
-                    <Label text="Create New Employee" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTitle" />
+                    <Label text="Create New Employee" GridPane.rowIndex="0" GridPane.columnIndex="1" fx:id="lblTitle" styleClass="titleLabel" />
 
                     <!--Start of Standard Info-->
                     <Label text="Standard Information" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="lblStandardInfo" />
